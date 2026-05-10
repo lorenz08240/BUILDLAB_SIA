@@ -1,25 +1,53 @@
-import React, { useState, Suspense } from 'react';
-import { Canvas } from '@react-three/fiber';
+import React, { useState, Suspense, useRef, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
+import { Canvas, useFrame } from '@react-three/fiber';
 import { OrthographicCamera, Grid, useTexture, DragControls } from '@react-three/drei';
 import { buildSteps, componentsData } from '../Build/Build';
 import './PCBuilder3D.css';
 
 // This represents the 3D model of a part that was dropped onto the canvas
-function PartModel({ part, position, index }) {
-  // Use a dynamic path based on the part's category!
-  // Since you only have case.png right now, we use it for the case,
-  // and fallback to pcbackground.png for the other parts so the app doesn't crash.
-  const texturePath = part.category === 'case' 
-    ? '/textures/case.png' 
-    : '/pcbackground.png';
+function PartModel({ part, position, index, placedParts }) {
+  const materialRef = useRef();
+  
+  let texturePath = '/pcbackground.png';
+  let isVisible = true;
+
+  if (part.category === 'case') {
+    // Fake Scenario: If they dropped the MSI motherboard, swap the case texture!
+    const hasMsiMobo = placedParts.some(p => p.id === 'msi-b450-tomahawk');
+    if (part.id === 'case1' && hasMsiMobo) {
+      texturePath = '/textures/case1-B450-TomHawk.png';
+    } else {
+      texturePath = `/textures/${part.id}.png`;
+    }
+  } else if (part.category === 'motherboard') {
+    // If it's the MSI motherboard and case1 is present, hide this block 
+    // because it's now merged into the case texture!
+    const hasCase1 = placedParts.some(p => p.id === 'case1');
+    if (part.id === 'msi-b450-tomahawk' && hasCase1) {
+      isVisible = false;
+    }
+  }
 
   const texture = useTexture(texturePath);
+
+  // Flash Effect: trigger whenever the texture changes!
+  useEffect(() => {
+    if (materialRef.current) {
+      materialRef.current.opacity = 0.8; // Start with a solid white flash
+    }
+  }, [texturePath]);
+
+  // Gradually fade out the flash overlay
+  useFrame((state, delta) => {
+    if (materialRef.current && materialRef.current.opacity > 0) {
+      materialRef.current.opacity -= delta * 3;
+    }
+  });
 
   // Dynamic sizes based on category
   let dimensions = [3, 3, 3]; // Default size for smaller components
   if (part.category === 'case') {
-    // Make the case thin (0.5) so it acts like a flat 2D canvas on the floor.
-    // Dimensions [20, Z=24] give it a rectangular aspect ratio to prevent squishing.
     dimensions = [20, 0.5, 24]; 
   } else if (part.category === 'motherboard') {
     dimensions = [14, 0.5, 14]; // Flat board inside the case
@@ -27,17 +55,62 @@ function PartModel({ part, position, index }) {
 
   return (
     <DragControls>
-      <mesh position={position}>
-        <boxGeometry args={dimensions} />
-        {/* The map property applies the texture to all sides of the box */}
-        <meshStandardMaterial map={texture} color="#ffffff" />
-      </mesh>
+      <group position={position} visible={isVisible}>
+        {/* Main Model - Basic Material ignores lighting and shows true, bright colors */}
+        <mesh>
+          <boxGeometry args={dimensions} />
+          <meshBasicMaterial 
+            map={texture} 
+            color="#ffffff" 
+            transparent={true} 
+          />
+        </mesh>
+        
+        {/* Flash Overlay */}
+        <mesh>
+          <boxGeometry args={[dimensions[0] + 0.1, dimensions[1] + 0.1, dimensions[2] + 0.1]} />
+          <meshBasicMaterial 
+            ref={materialRef}
+            color="#ffffff" 
+            transparent={true} 
+            opacity={0}
+            depthWrite={false}
+          />
+        </mesh>
+      </group>
     </DragControls>
   );
 }
 
 function PCBuilder3D() {
-  const [placedParts, setPlacedParts] = useState([]);
+  const navigate = useNavigate();
+  
+  // History state for Undo/Redo
+  const [history, setHistory] = useState([[]]);
+  const [historyIndex, setHistoryIndex] = useState(0);
+  const placedParts = history[historyIndex];
+
+  // Custom updater that pushes to history
+  const updatePlacedParts = (newParts) => {
+    const newHistory = history.slice(0, historyIndex + 1);
+    newHistory.push(newParts);
+    setHistory(newHistory);
+    setHistoryIndex(newHistory.length - 1);
+  };
+
+  const handleUndo = () => {
+    if (historyIndex > 0) setHistoryIndex(historyIndex - 1);
+  };
+
+  const handleRedo = () => {
+    if (historyIndex < history.length - 1) setHistoryIndex(historyIndex + 1);
+  };
+
+  const handleClear = () => {
+    updatePlacedParts([]);
+    setActiveStep(0);
+  };
+
   const [activeStep, setActiveStep] = useState(0); // 0 is PC Case
 
   const handleDragStart = (e, part, category) => {
@@ -71,11 +144,9 @@ function PCBuilder3D() {
         dropPosition = [0, heightY, 0];
       }
 
-      setPlacedParts(prev => {
-        // Replace if category already exists, otherwise add
-        const filtered = prev.filter(p => p.category !== part.category);
-        return [...filtered, { ...part, uid: Date.now(), position: dropPosition }];
-      });
+      // Replace if category already exists, otherwise add
+      const filtered = placedParts.filter(p => p.category !== part.category);
+      updatePlacedParts([...filtered, { ...part, uid: Date.now(), position: dropPosition }]);
 
       // Unlock next step if the dropped part belongs to the CURRENT active step
       const stepIndex = buildSteps.findIndex(s => s.key === part.category);
@@ -96,7 +167,31 @@ function PCBuilder3D() {
     <div className="pc-builder-container">
       {/* Sidebar for Dragging Parts */}
       <div className="parts-sidebar">
-        <h2>3D Builder</h2>
+        <div className="sidebar-top-bar">
+          <h2>3D Builder</h2>
+          <button className="exit-btn" onClick={() => navigate('/')}>✕ Exit</button>
+        </div>
+
+        <div className="sidebar-actions-bar">
+          <button 
+            className="action-btn" 
+            onClick={handleUndo} 
+            disabled={historyIndex === 0}
+            title="Undo"
+          >↩ Undo</button>
+          <button 
+            className="action-btn" 
+            onClick={handleRedo} 
+            disabled={historyIndex === history.length - 1}
+            title="Redo"
+          >↪ Redo</button>
+          <button 
+            className="action-btn clear-btn" 
+            onClick={handleClear}
+            disabled={placedParts.length === 0}
+            title="Clear Build"
+          >🗑 Clear</button>
+        </div>
         <p className="sidebar-hint">Drag parts into the 3D grid in order.</p>
 
         <div className="accordion-container">
@@ -181,7 +276,13 @@ function PCBuilder3D() {
 
           <Suspense fallback={null}>
             {placedParts.map((part, index) => (
-              <PartModel key={part.uid} part={part} position={part.position} index={index} />
+              <PartModel 
+                key={part.uid} 
+                part={part} 
+                position={part.position} 
+                index={index} 
+                placedParts={placedParts} 
+              />
             ))}
           </Suspense>
         </Canvas>
