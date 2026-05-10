@@ -1,198 +1,236 @@
-import React, { useEffect, useMemo, useState } from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useBuild } from "../../contexts/BuildContext";
 import "./Learn.css";
 
-const currentStepTips = [
+const componentGuide = [
   {
-    title: "CPU Fundamentals",
-    summary: "Start with the brain of the PC. The CPU socket must match the motherboard socket.",
-    details: "Choose a CPU first, then match it with a motherboard that uses the same socket type. This is the most important pairing when building a PC.",
+    id: "cpu",
+    name: "CPU (Processor)",
+    icon: "🎯",
+    difficulty: "Critical",
+    description:
+      "The brain of your computer. Handles all calculations and instructions.",
+    image:
+      "https://images.unsplash.com/photo-1591799264318-7e6ef8ddb7ea?auto=format&fit=crop&w=600&q=80",
+    specs: [
+      {
+        label: "Socket",
+        value: "LGA1700, AM5, etc.",
+        info: "Must match motherboard",
+      },
+      {
+        label: "Cores/Threads",
+        value: "6-24 cores typical",
+        info: "More cores = better multitasking",
+      },
+      {
+        label: "Clock Speed",
+        value: "3.5-5.8 GHz",
+        info: "Higher = faster single-task performance",
+      },
+      {
+        label: "TDP",
+        value: "65-250W",
+        info: "Heat output - affects cooler choice",
+      },
+    ],
+    whyMatters:
+      "Your CPU choice determines which motherboard you'll need. It's the foundation of your build.",
+    proTips: [
+      "Match CPU socket to motherboard before purchasing",
+      "Don't overspend on CPU for gaming - GPU matters more",
+      "Higher core count helps with streaming and content creation",
+      "Check TDP to plan your cooling solution",
+    ],
+    commonMistakes: [
+      "Buying incompatible socket CPU",
+      "Over-prioritizing single-core speed",
+      "Forgetting TDP when choosing a cooler",
+    ],
+    bestFor: {
+      gaming: "6-8 core CPU, focus on speed",
+      streaming: "12+ cores for multitasking",
+      work: "16+ cores for rendering",
+    },
+    brands: [
+      {
+        name: "Intel",
+        logo: "🖥️",
+        description: "Core i9/i7/i5. Market leader in single-core performance.",
+        tier: "Premium",
+      },
+      {
+        name: "AMD",
+        logo: "🔧",
+        description: "Ryzen 9/7/5. Great value, excellent multitasking.",
+        tier: "Value",
+      },
+    ],
   },
-  {
-    title: "Motherboard Basics",
-    summary: "Motherboards define what CPUs, RAM, and cases you can use.",
-    details: "Check socket type, memory type, and size. A good motherboard keeps your system stable and allows future upgrades.",
-  },
-  {
-    title: "RAM and Memory",
-    summary: "DDR4 and DDR5 are not interchangeable.",
-    details: "Match the RAM type to your motherboard. Faster RAM can boost performance, but the motherboard must support the same DDR generation.",
-  },
-  {
-    title: "Storage Options",
-    summary: "NVMe SSDs are usually the fastest option for modern builds.",
-    details: "Decide between NVMe, SATA, and hybrid storage based on budget and speed needs. Most modern motherboards support NVMe drives directly.",
-  },
-  {
-    title: "GPU Power",
-    summary: "A better GPU usually means a higher power demand.",
-    details: "Make sure your power supply has enough wattage for your chosen graphics card, and verify there are enough PCIe power connectors.",
-  },
-  {
-    title: "Power Supply Selection",
-    summary: "Always pick a PSU with overhead, not just the minimum wattage.",
-    details: "Choose a reliable power unit with enough wattage for your whole system plus extra headroom for future upgrades.",
-  },
-  {
-    title: "Case and Cooling",
-    summary: "Case size matters for motherboard fit and airflow.",
-    details: "Pick a case that supports your motherboard form factor and gives enough room for proper cooling and cable management.",
-  },
-];
-
-const generalTips = [
-  {
-    title: "CPU Socket Compatibility",
-    detail: "Pay attention to socket names like LGA1700, AM4, and AM5. Each CPU family uses a specific socket.",
-  },
-  {
-    title: "RAM Types: DDR4 vs DDR5",
-    detail: "DDR5 is newer and faster, but it only works with motherboards designed for DDR5. DDR4 is more affordable and still a solid choice.",
-  },
-  {
-    title: "NVMe vs SATA Storage",
-    detail: "NVMe SSDs are much faster than SATA SSDs. Use NVMe for your operating system and SATA for bulk storage.",
-  },
-  {
-    title: "GPU Power Requirements",
-    detail: "High-end GPUs can need 600W or more. Always choose a PSU with enough wattage plus at least 20% buffer.",
-  },
-  {
-    title: "Case Form Factor & Airflow",
-    detail: "Good airflow helps keep component temperatures low. Make sure your case supports the motherboard size and cooling options you want.",
-  },
-];
-
-const stepNames = [
-  "CPU",
-  "Motherboard",
-  "RAM",
-  "Storage",
-  "GPU",
-  "Power",
-  "Case",
 ];
 
 export default function Learn() {
   const { getSelectedComponents } = useBuild();
-  const selectedComponents = getSelectedComponents();
-  const [activeTab, setActiveTab] = useState("current");
-  const [activeTipIndex, setActiveTipIndex] = useState(0);
-  const [previewSrc, setPreviewSrc] = useState(
-    "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=900&q=80"
+  const [selectedComponent, setSelectedComponent] = useState(componentGuide[0]);
+  const [searchQuery, setSearchQuery] = useState("");
+
+  const filteredComponents = componentGuide.filter(
+    (c) =>
+      c.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+      c.description.toLowerCase().includes(searchQuery.toLowerCase())
   );
-  const [uploadedUrl, setUploadedUrl] = useState(null);
-
-  const selectedCount = selectedComponents.length;
-  const currentStepLabel = useMemo(() => {
-    if (selectedCount >= stepNames.length) {
-      return "Build Review";
-    }
-    return `${stepNames[selectedCount]} Step`;
-  }, [selectedCount]);
-
-  useEffect(() => {
-    return () => {
-      if (uploadedUrl) {
-        URL.revokeObjectURL(uploadedUrl);
-      }
-    };
-  }, [uploadedUrl]);
-
-  const handleUpload = (event) => {
-    const file = event.target.files?.[0];
-    if (!file) return;
-    const url = URL.createObjectURL(file);
-    setPreviewSrc(url);
-    if (uploadedUrl) {
-      URL.revokeObjectURL(uploadedUrl);
-    }
-    setUploadedUrl(url);
-  };
-
-  const activeTips = activeTab === "current" ? currentStepTips : generalTips;
-  const activeTip = activeTips[activeTipIndex] || activeTips[0];
 
   return (
     <div className="learn-page">
-      <div className="learn-hero">
-        <div className="learn-hero-copy">
-          <span className="learn-badge">Learning Tips & Resources</span>
-          <h1>Learn As You Build</h1>
+      {/* ── HERO ── */}
+      <div className="learn-hero-new">
+        <div className="hero-content">
+          <span className="hero-eyebrow">🎓 Master PC Building</span>
+          <h1>Learn Every Component</h1>
           <p>
-            BuildLab teaches the concepts behind every component selection. No prior knowledge required.
+            Understand what each part does, why it matters, and how to choose
+            wisely for your build.
           </p>
-          <div className="learn-buttons">
-            <Link to="/build" className="btn-primary">Start Building</Link>
-            <Link to="/compatibility" className="btn-secondary">Check Compatibility</Link>
-          </div>
-          <div className="learn-summary">
-            <div>
-              <span className="learn-number">{selectedCount}</span>
-              <p>components selected</p>
-            </div>
-            <div>
-              <span className="learn-number">{currentStepLabel}</span>
-              <p>current learning focus</p>
-            </div>
-          </div>
-        </div>
-        <div className="learn-hero-image">
-          <img src={previewSrc} alt="Learning visual" />
-          <label className="upload-card">
-            <span>Upload custom section image</span>
-            <input type="file" accept="image/*" onChange={handleUpload} />
-          </label>
         </div>
       </div>
 
-      <div className="learn-tabs">
-        <button
-          className={`tab-button ${activeTab === "current" ? "active" : ""}`}
-          onClick={() => {
-            setActiveTab("current");
-            setActiveTipIndex(0);
-          }}
-        >
-          Current Step Tips
-        </button>
-        <button
-          className={`tab-button ${activeTab === "general" ? "active" : ""}`}
-          onClick={() => {
-            setActiveTab("general");
-            setActiveTipIndex(0);
-          }}
-        >
-          General PC Tips
-        </button>
+      {/* ── SEARCH ── */}
+      <div className="learn-search-section">
+        <div className="search-wrapper">
+          <span className="search-icon">🔍</span>
+          <input
+            type="text"
+            className="learn-search-input"
+            placeholder="Search components..."
+            value={searchQuery}
+            onChange={(e) => setSearchQuery(e.target.value)}
+          />
+        </div>
       </div>
 
-      <div className="learn-grid">
-        <div className="learn-tip-card">
-          <h3>{activeTip.title}</h3>
-          <p>{activeTip.summary || activeTip.detail}</p>
-          {activeTip.details && <p className="learn-detail">{activeTip.details}</p>}
-          <div className="tip-actions">
-            <button className="btn-outline">Explore More</button>
-            <button className="btn-primary">Apply to Build</button>
-          </div>
-        </div>
-
-        <div className="learn-list-card">
-          <h3>{activeTab === "current" ? "Step-by-Step Tips" : "All Tips"}</h3>
-          <div className="learn-list">
-            {activeTips.map((tip, index) => (
-              <button
-                key={index}
-                className={`learn-list-item ${index === activeTipIndex ? "selected" : ""}`}
-                onClick={() => setActiveTipIndex(index)}
+      {/* ── COMPONENT GRID ── */}
+      <div className="components-grid">
+        {filteredComponents.map((component) => (
+          <div
+            key={component.id}
+            className={`component-card ${
+              selectedComponent.id === component.id ? "active" : ""
+            }`}
+            onClick={() => setSelectedComponent(component)}
+          >
+            <div className="card-image-wrapper">
+              <img
+                src={component.image}
+                alt={component.name}
+                className="card-image"
+              />
+            </div>
+            <div className="card-content">
+              <div className="card-icon">{component.icon}</div>
+              <h3>{component.name}</h3>
+              <span
+                className={`difficulty-badge ${component.difficulty.toLowerCase()}`}
               >
-                <span>{tip.title}</span>
-                <span>{activeTab === "current" ? "→" : "•"}</span>
-              </button>
-            ))}
+                {component.difficulty}
+              </span>
+              <p>{component.description}</p>
+            </div>
           </div>
+        ))}
+      </div>
+
+      {/* ── DETAIL PANEL ── */}
+      <div className="detail-panel">
+        <div className="detail-header">
+          <div className="detail-title-section">
+            <span className="detail-icon">{selectedComponent.icon}</span>
+            <div>
+              <h2>{selectedComponent.name}</h2>
+              <p className="detail-description">
+                {selectedComponent.description}
+              </p>
+            </div>
+          </div>
+        </div>
+
+        {/* ── SPECS TABLE ── */}
+        <h3 className="section-title">📊 Key Specifications</h3>
+        <div className="specs-grid">
+          {selectedComponent.specs.map((spec, idx) => (
+            <div key={idx} className="spec-item">
+              <div className="spec-label">{spec.label}</div>
+              <div className="spec-value">{spec.value}</div>
+              <div className="spec-info">{spec.info}</div>
+            </div>
+          ))}
+        </div>
+        {/* ── WHY IT MATTERS ── */}
+        <h3 className="section-title" style={{ marginTop: "24px" }}>
+          ⭐ Why It Matters
+        </h3>
+        <p style={{ color: "#94a3b8", marginBottom: "24px" }}>
+          {selectedComponent.whyMatters}
+        </p>
+        {/* ── PRO TIPS ── */}
+        <h3 className="section-title">💡 Pro Tips</h3>
+        <div className="tips-list">
+          {selectedComponent.proTips.map((tip, idx) => (
+            <div key={idx} className="tip-item">
+              <span className="tip-dot">✓</span>
+              <span>{tip}</span>
+            </div>
+          ))}
+        </div>
+        {/* ── COMMON MISTAKES ── */}
+        <h3 className="section-title" style={{ marginTop: "24px" }}>
+          ⚠️ Common Mistakes
+        </h3>
+        <div className="mistakes-list">
+          {selectedComponent.commonMistakes.map((mistake, idx) => (
+            <div key={idx} className="mistake-item">
+              <span className="mistake-icon">✗</span>
+              <span>{mistake}</span>
+            </div>
+          ))}
+        </div>
+        {/* ── BEST FOR ── */}
+        <h3 className="section-title" style={{ marginTop: "24px" }}>
+          🎯 Best For
+        </h3>
+        <div className="best-for-grid">
+          {Object.entries(selectedComponent.bestFor).map(
+            ([useCase, recommendation], idx) => (
+              <div key={idx} className="best-for-item">
+                <div className="use-case">{useCase}</div>
+                <div className="recommendation">{recommendation}</div>
+              </div>
+            )
+          )}
+        </div>
+        {/* ── BRANDS ── */}
+        <h3 className="section-title" style={{ marginTop: "24px" }}>
+          🏢 Popular Brands
+        </h3>
+        <div className="brands-grid">
+          {selectedComponent.brands.map((brand, idx) => (
+            <div key={idx} className="brand-item">
+              <div className="brand-header">
+                <span className="brand-logo">{brand.logo}</span>
+                <div>
+                  <div className="brand-name">{brand.name}</div>
+                  <div className="brand-tier">{brand.tier}</div>
+                </div>
+              </div>
+              <p className="brand-description">{brand.description}</p>
+            </div>
+          ))}
+        </div>
+        {/* ── CTA ── */}
+        <div className="detail-cta">
+          <Link to="/build" className="cta-button-neon">
+            Go to Build →
+          </Link>
         </div>
       </div>
     </div>
