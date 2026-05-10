@@ -78,9 +78,9 @@
 }
 
 .stat-number {
-  font-size: 2.5rem;
-  font-weight: 800;
-  color: #facc15;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: #d1d5db;
   display: block;
 }
 
@@ -119,11 +119,25 @@
   background-color: #facc15; /* Darker yellow */
 }
 
+/* Larger prominent buttons for hero section */
+.hero-main-btn {
+  font-size: 1.25rem !important;
+  padding: 1rem 2.5rem !important;
+  border-radius: 9999px !important; /* Pill shape */
+  box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4) !important;
+  transition: transform 0.3s ease, box-shadow 0.3s ease !important;
+}
+
+.hero-main-btn:hover {
+  transform: translateY(-3px) scale(1.02) !important;
+  box-shadow: 0 15px 30px -5px rgba(0, 0, 0, 0.6) !important;
+}
+
 /* Hero features */
 .hero-features {
   display: grid;
   grid-template-columns: repeat(2, 1fr);
-  grid-template-rows: repeat(3, auto);
+  grid-template-rows: repeat(2, auto);
   gap: 2rem;
   margin-top: 3rem;
   max-width: 1200px;
@@ -310,5 +324,82 @@
 
   .why-build {
     padding: 2rem 1rem;
+  }
+}
+
+/* Welcome Banner Overlay */
+.welcome-banner {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 9999;
+  background-color: rgba(13, 17, 23, 0.75);
+  backdrop-filter: blur(15px);
+  -webkit-backdrop-filter: blur(15px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: opacity 0.5s ease, backdrop-filter 0.5s ease;
+  opacity: 1;
+}
+
+.welcome-banner.fade-out {
+  opacity: 0;
+  backdrop-filter: blur(0px);
+  -webkit-backdrop-filter: blur(0px);
+  pointer-events: none;
+}
+
+.welcome-banner-content {
+  text-align: center;
+  color: white;
+  padding: 4rem;
+  border-radius: 1.5rem;
+  background: rgba(255, 255, 255, 0.05);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(20px);
+  max-width: 90%;
+}
+
+.welcome-title {
+  font-size: 3.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.welcome-title .yellow {
+  color: #facc15;
+}
+
+.welcome-text {
+  font-size: 1.25rem;
+  color: #9ca3af;
+  margin-bottom: 2.5rem;
+}
+
+.banner-btn {
+  font-size: 1.125rem;
+  padding: 1rem 3rem;
+  cursor: pointer;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+}
+
+.banner-btn:hover {
+  transform: scale(1.05);
+}
+
+@media (max-width: 768px) {
+  .welcome-title {
+    font-size: 2.5rem;
+  }
+  .welcome-banner-content {
+    padding: 2.5rem 1.5rem;
   }
 }

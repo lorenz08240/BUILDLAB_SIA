@@ -1,0 +1,192 @@
+/* PCBuilder3D.css */
+.pc-builder-container {
+  display: flex;
+  height: 100vh;
+  width: 100vw;
+  background-color: #0d1117;
+  color: white;
+  overflow: hidden;
+  padding-top: 80px; /* Prevent overlap with the fixed Navbar */
+  box-sizing: border-box;
+}
+
+/* Sidebar Styling */
+.parts-sidebar {
+  width: 400px; /* Made wider to fit 2 columns */
+  background-color: #161b22;
+  border-right: 1px solid #30363d;
+  display: flex;
+  flex-direction: column;
+  z-index: 10;
+  box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
+  overflow-y: auto; /* Allow scrolling within sidebar */
+}
+
+/* Custom Scrollbar for sidebar */
+.parts-sidebar::-webkit-scrollbar {
+  width: 8px;
+}
+.parts-sidebar::-webkit-scrollbar-track {
+  background: #0d1117;
+}
+.parts-sidebar::-webkit-scrollbar-thumb {
+  background: #30363d;
+  border-radius: 4px;
+}
+.parts-sidebar::-webkit-scrollbar-thumb:hover {
+  background: #4b5563;
+}
+
+.parts-sidebar h2 {
+  font-size: 1.5rem;
+  color: #facc15;
+  margin: 1.5rem 1.5rem 0.25rem 1.5rem;
+  font-weight: 800;
+}
+
+.sidebar-hint {
+  color: #8b949e;
+  font-size: 0.875rem;
+  margin: 0 1.5rem 1.5rem 1.5rem;
+}
+
+/* Accordion */
+.accordion-container {
+  display: flex;
+  flex-direction: column;
+}
+
+.accordion-item {
+  border-bottom: 1px solid #30363d;
+}
+
+.accordion-header {
+  padding: 1.25rem 1.5rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+  background-color: #161b22;
+  transition: background-color 0.2s;
+}
+
+.accordion-header:hover {
+  background-color: #21262d;
+}
+
+.accordion-item.locked .accordion-header {
+  cursor: not-allowed;
+  opacity: 0.5;
+}
+
+.accordion-item.expanded .accordion-header {
+  background-color: #21262d;
+  border-left: 3px solid #facc15;
+}
+
+.accordion-title {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  font-weight: 600;
+  font-size: 1.1rem;
+}
+
+.step-icon {
+  font-size: 1.25rem;
+  width: 24px;
+  text-align: center;
+}
+
+.accordion-status {
+  color: #8b949e;
+  font-size: 0.875rem;
+}
+
+.accordion-content-wrapper {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.3s ease-in-out;
+}
+
+.accordion-item.expanded .accordion-content-wrapper {
+  grid-template-rows: 1fr;
+}
+
+.accordion-content {
+  overflow: hidden;
+  min-height: 0;
+  background-color: #0d1117;
+}
+
+/* 2 Column Grid for Parts */
+.components-2col-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  padding: 1rem;
+}
+
+.draggable-comp-card {
+  background-color: #21262d;
+  border: 1px solid #30363d;
+  border-radius: 0.5rem;
+  overflow: hidden;
+  cursor: grab;
+  transition: transform 0.2s, border-color 0.2s;
+  display: flex;
+  flex-direction: column;
+}
+
+.draggable-comp-card:active {
+  cursor: grabbing;
+}
+
+.draggable-comp-card:hover {
+  border-color: #facc15;
+  transform: translateY(-2px);
+}
+
+.draggable-comp-card img {
+  width: 100%;
+  height: 100px;
+  object-fit: cover;
+  border-bottom: 1px solid #30363d;
+  background-color: white; /* to handle transparent pngs */
+}
+
+.comp-info {
+  padding: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  gap: 0.25rem;
+}
+
+.comp-brand {
+  font-size: 0.7rem;
+  color: #8b949e;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+.comp-name {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: #c9d1d9;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.comp-price {
+  font-size: 0.8rem;
+  color: #facc15;
+  font-weight: 700;
+}
+
+/* 3D Canvas Area */
+.canvas-container {
+  flex: 1;
+  position: relative;
+  cursor: crosshair;
+}

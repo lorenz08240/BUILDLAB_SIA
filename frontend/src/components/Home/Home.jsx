@@ -1,10 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import "./Home.css"; // Import the CSS file for styling
 
+let hasSeenBannerThisSession = false;
+
 function Hero() {
+  const [isBannerVisible, setIsBannerVisible] = useState(!hasSeenBannerThisSession);
+  const [isFadingOut, setIsFadingOut] = useState(false);
+
+  const handleStartBuild = () => {
+    setIsFadingOut(true);
+    hasSeenBannerThisSession = true;
+    setTimeout(() => {
+      setIsBannerVisible(false);
+    }, 500); // Wait for the 0.5s fade-out animation to complete
+  };
+
   return (
     <>
+      {isBannerVisible && (
+        <div className={`welcome-banner ${isFadingOut ? "fade-out" : ""}`}>
+          <div className="welcome-banner-content">
+            <h1 className="welcome-title">
+              Welcome to <span className="yellow">BuildLab</span>
+            </h1>
+            <p className="welcome-text">Your ultimate PC building simulator.</p>
+            <button className="btn-primary banner-btn" onClick={handleStartBuild}>
+              START BUILD NOW
+            </button>
+          </div>
+        </div>
+      )}
       <section id="welcome" className="hero">
         <div className="hero-badge"></div>
 
@@ -38,13 +64,13 @@ function Hero() {
         </div>
 
         <div className="hero-btns">
-          <Link to="/build" className="btn-primary">
+          <Link to="/build" className="btn-primary hero-main-btn">
             {" "}
             Start Building Now
           </Link>
-          <Link to="/learn" className="btn-secondary">
+          <Link to="/learn" className="btn-secondary hero-main-btn">
             {" "}
-            Learn Section
+            Explore Resources
           </Link>
         </div>
 
@@ -71,18 +97,6 @@ function Hero() {
             <div className="feat-icon"></div>
             <h4>Build Summary</h4>
             <p>Detailed report with performance benchmarks</p>
-          </div>
-
-          <div className="feat-card">
-            <div className="feat-icon"></div>
-            <h4>Save Money</h4>
-            <p>Build for 30-50% less than pre-built systems</p>
-          </div>
-
-          <div className="feat-card">
-            <div className="feat-icon"></div>
-            <h4>Future-Proof</h4>
-            <p>Upgrade easily with modular component design</p>
           </div>
         </div>
       </section>

@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { useBuild } from "../../contexts/BuildContext";
 import "./Build.css";
 
-const buildSteps = [
+export const buildSteps = [
   {
     key: "case",
     label: "PC Case",
@@ -47,7 +47,7 @@ const buildSteps = [
     description: "Powers your entire system",
   },
 ];
-const componentsData = {
+export const componentsData = {
   case: [
     {
       id: "case1",
