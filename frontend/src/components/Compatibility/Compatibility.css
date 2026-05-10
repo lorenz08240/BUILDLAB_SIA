@@ -59,10 +59,8 @@
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  background-image: linear-gradient(
-      rgba(0, 229, 160, 0.025) 1px,
-      transparent 1px
-    ),
+  background-image: linear-gradient(rgba(0, 229, 160, 0.025) 1px,
+      transparent 1px),
     linear-gradient(90deg, rgba(0, 229, 160, 0.025) 1px, transparent 1px);
   background-size: 40px 40px;
 }
@@ -76,6 +74,7 @@
   filter: blur(120px);
   opacity: 0.18;
 }
+
 .bg-glow-1 {
   width: 600px;
   height: 600px;
@@ -83,6 +82,7 @@
   top: -200px;
   right: -100px;
 }
+
 .bg-glow-2 {
   width: 500px;
   height: 500px;
@@ -92,7 +92,7 @@
 }
 
 /* All direct children above bg */
-.compat-page > *:not(.bg-grid):not(.bg-glow) {
+.compat-page>*:not(.bg-grid):not(.bg-glow) {
   position: relative;
   z-index: 1;
 }
@@ -120,10 +120,12 @@
 }
 
 @keyframes pulse-ring {
+
   0%,
   100% {
     box-shadow: 0 0 0 0 rgba(0, 229, 160, 0);
   }
+
   50% {
     box-shadow: 0 0 0 8px rgba(0, 229, 160, 0.08);
   }
@@ -174,12 +176,14 @@
   display: block;
   margin-bottom: 16px;
 }
+
 .empty-card h3 {
   font-family: var(--font-display);
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 10px;
 }
+
 .empty-card p {
   color: var(--text-secondary);
   font-size: 14px;
@@ -198,13 +202,14 @@
   border-radius: var(--r-md);
   font-weight: 700;
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: 19px;
   letter-spacing: 0.04em;
   text-decoration: none;
   border: none;
   cursor: pointer;
   transition: background 0.18s, transform 0.12s;
 }
+
 .btn-primary:hover {
   background: var(--green-dim);
   transform: translateY(-1px);
@@ -221,12 +226,13 @@
   border-radius: var(--r-md);
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 14px;
+  font-size: 19px;
   letter-spacing: 0.04em;
   text-decoration: none;
   cursor: pointer;
   transition: background 0.18s;
 }
+
 .btn-outline:hover {
   background: var(--green-glow);
 }
@@ -234,8 +240,10 @@
 /* ── Main layout ── */
 .main-layout {
   display: grid;
-  grid-template-columns: 2fr 1.2fr; /* Adjusted: Left panel takes 2 parts, right panel takes 1.2 parts */
-  gap: 24px; /* Space between the panels */
+  grid-template-columns: 2fr 1.2fr;
+  /* Adjusted: Left panel takes 2 parts, right panel takes 1.2 parts */
+  gap: 24px;
+  /* Space between the panels */
   max-width: 1720px;
   margin: 0 auto;
   padding: 28px 20px 0;
@@ -257,6 +265,7 @@
   padding: 22px;
   transition: border-color 0.2s;
 }
+
 .panel-card:hover {
   border-color: var(--border-mid);
 }
@@ -270,7 +279,7 @@
 
 .panel-title {
   font-family: var(--font-display);
-  font-size: 15px;
+  font-size: 23px;
   font-weight: 600;
   color: var(--text-primary);
   display: flex;
@@ -285,7 +294,7 @@
 }
 
 .parts-count {
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 600;
   font-family: var(--font-display);
   letter-spacing: 0.06em;
@@ -310,6 +319,7 @@
   padding: 14px 16px;
   transition: border-color 0.18s, background 0.18s;
 }
+
 .comp-item:hover {
   border-color: var(--green-border);
   background: var(--bg-raised);
@@ -326,7 +336,7 @@
   background: var(--bg-raised);
   border: 1px solid var(--border-mid);
   color: var(--text-secondary);
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 700;
   font-family: var(--font-display);
   letter-spacing: 0.1em;
@@ -338,13 +348,13 @@
   margin-left: auto;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 16px;
   color: var(--text-primary);
 }
 
 /* ── Status badge ── */
 .status-badge {
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 700;
   font-family: var(--font-display);
   letter-spacing: 0.06em;
@@ -391,7 +401,7 @@
 }
 
 .comp-info h4 {
-  font-size: 13px;
+  font-size: 19px;
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 4px;
@@ -399,7 +409,7 @@
 }
 
 .comp-info p {
-  font-size: 12px;
+  font-size: 15px;
   color: var(--text-secondary);
   margin-bottom: 8px;
   line-height: 1.5;
@@ -482,6 +492,7 @@
   border-radius: 4px;
   transition: color 0.15s;
 }
+
 .dismiss-btn:hover {
   color: var(--text-secondary);
 }
@@ -528,13 +539,14 @@
   border-radius: var(--r-md);
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 13px;
+  font-size: 19px;
   letter-spacing: 0.05em;
   text-decoration: none;
   cursor: pointer;
   border: none;
   transition: background 0.18s;
 }
+
 .fix-btn:hover {
   background: var(--green-dim);
 }
@@ -570,6 +582,7 @@
   color: var(--text-secondary);
   line-height: 1.5;
 }
+
 .success-card .btn-outline {
   margin-left: auto;
   white-space: nowrap;
@@ -589,6 +602,7 @@
   padding: 18px 16px;
   transition: border-color 0.2s, background 0.2s;
 }
+
 .feature-card:hover {
   border-color: var(--green-border);
   background: var(--bg-raised);
@@ -622,8 +636,10 @@
   gap: 20px;
   position: sticky;
   top: 80px;
-  padding-left: 20px; /* Add padding to the left */
+  padding-left: 20px;
+  /* Add padding to the left */
 }
+
 .sidebar-card {
   background: var(--bg-card);
   border: 1px solid var(--border-dim);
@@ -632,12 +648,13 @@
   padding: 28px;
   transition: border-color 0.2s;
 }
+
 .sidebar-card:hover {
   border-color: var(--border-mid);
 }
 
 .sidebar-label {
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 700;
   font-family: var(--font-display);
   letter-spacing: 0.15em;
@@ -648,7 +665,7 @@
 
 .sidebar-title {
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 23px;
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: 0.04em;
@@ -737,10 +754,12 @@
   border-radius: 50%;
   flex-shrink: 0;
 }
+
 .dot-current {
   background: var(--green);
   box-shadow: 0 0 6px var(--green);
 }
+
 .dot-saved {
   background: var(--amber);
   box-shadow: 0 0 6px var(--amber);
@@ -775,7 +794,7 @@
 
 .score-num {
   font-family: var(--font-display);
-  font-size: 30px;
+  font-size: 35px;
   font-weight: 700;
   color: var(--green);
   line-height: 1;
@@ -808,7 +827,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .slot-card {
@@ -823,10 +842,12 @@
 .slot-card.slot-filled {
   cursor: pointer;
 }
+
 .slot-card.slot-filled:hover {
   border-color: var(--green-border);
   background: var(--bg-raised);
 }
+
 .slot-card.slot-selected {
   border-color: var(--green-border-bright);
   background: var(--green-glow);
@@ -847,7 +868,7 @@
 
 .slot-name {
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: 0.04em;
@@ -867,20 +888,21 @@
   align-items: center;
   gap: 8px;
 }
+
 .slot-parts {
-  font-size: 11px;
+  font-size: 15px;
   color: var(--text-muted);
 }
 
 .slot-price {
   font-family: var(--font-display);
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text-secondary);
 }
 
 .slot-empty {
-  font-size: 11px;
+  font-size: 15px;
   color: var(--text-muted);
   font-style: italic;
 }
@@ -896,7 +918,7 @@
   padding: 7px 10px;
   border-radius: var(--r-sm);
   font-family: var(--font-display);
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.06em;
   cursor: pointer;
@@ -909,6 +931,7 @@
   background: var(--green);
   color: #060d18;
 }
+
 .save-slot-btn--save:hover {
   background: var(--green-dim);
 }
@@ -919,6 +942,7 @@
   color: var(--green);
   border: 1px solid var(--green-border-bright);
 }
+
 .save-slot-btn--compare:hover {
   background: var(--green-glow);
 }
@@ -947,15 +971,17 @@
   border-radius: var(--r-md);
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 19px;
   letter-spacing: 0.06em;
   cursor: pointer;
   margin-bottom: 12px;
   transition: background 0.18s;
 }
+
 .compare-toggle:hover {
   background: var(--green-dim);
 }
+
 .compare-toggle.full-width {
   margin-bottom: 0;
 }
@@ -963,21 +989,31 @@
 /* ── Compare diff ── */
 /* Compare diff card */
 .compare-diff {
-  background: var(--bg-card); /* Match the card background */
-  border: 1px solid var(--border-dim); /* Add a border to the card */
-  border-radius: var(--r-xl); /* Rounded corners */
-  padding: 20px; /* Add padding inside the card */
-  margin-top: 16px; /* Add spacing above the card */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Optional shadow for better visibility */
-  overflow: hidden; /* Ensure content stays inside the card */
+  background: var(--bg-card);
+  /* Match the card background */
+  border: 1px solid var(--border-dim);
+  /* Add a border to the card */
+  border-radius: var(--r-xl);
+  /* Rounded corners */
+  padding: 20px;
+  /* Add padding inside the card */
+  margin-top: 16px;
+  /* Add spacing above the card */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  /* Optional shadow for better visibility */
+  overflow: hidden;
+  /* Ensure content stays inside the card */
 }
 
 /* Diff grid inside the card */
 .diff-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Two columns for comparison */
-  gap: 12px; /* Space between columns */
-  margin-top: 16px; /* Add spacing above the grid */
+  grid-template-columns: 1fr 1fr;
+  /* Two columns for comparison */
+  gap: 12px;
+  /* Space between columns */
+  margin-top: 16px;
+  /* Add spacing above the grid */
 }
 
 .diff-col {
@@ -987,7 +1023,7 @@
 }
 
 .diff-head {
-  font-size: 12px;
+  font-size: 15px;
   font-family: var(--font-display);
   font-weight: 700;
   color: var(--text-muted);
@@ -1000,8 +1036,8 @@
   background: var(--bg-panel);
   border: 1px solid var(--border-dim);
   border-radius: var(--r-sm);
-  padding: 10px;
-  font-size: 12px;
+  padding: 15px;
+  font-size: 15px;
   color: var(--text-secondary);
   font-weight: 500;
   white-space: nowrap;
@@ -1010,11 +1046,24 @@
 }
 
 /* ── Summary card ── */
-.summary-rows {
+.summary-grid {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.summary-col {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  margin-bottom: 18px;
+  gap: 16px;
+}
+
+.summary-divider {
+  width: 1px;
+  background: var(--border-dim);
+  margin: 0 8px;
 }
 
 .summary-row {
@@ -1024,7 +1073,7 @@
 }
 
 .summary-lbl {
-  font-size: 9px;
+  font-size: 14px;
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -1039,13 +1088,13 @@
 }
 
 .summary-price {
-  font-size: 26px;
+  font-size: 30px;
   color: var(--text-primary);
   letter-spacing: -0.01em;
 }
 
 .summary-watt {
-  font-size: 20px;
+  font-size: 25px;
   color: var(--green);
   letter-spacing: 0.02em;
 }
@@ -1058,7 +1107,7 @@
 
 .system-score {
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: 35px;
   font-weight: 700;
   color: var(--green);
   letter-spacing: -0.01em;
@@ -1074,11 +1123,15 @@
 /* ── Responsive ── */
 @media (max-width: 860px) {
   .main-layout {
-    grid-template-columns: 1fr; /* Stack panels vertically */
+    grid-template-columns: 1fr;
+    /* Stack panels vertically */
   }
+
   .right-panel {
-    position: static; /* Remove sticky positioning */
-    padding-left: 0; /* Remove left padding */
+    position: static;
+    /* Remove sticky positioning */
+    padding-left: 0;
+    /* Remove left padding */
   }
 }
 
@@ -1086,13 +1139,16 @@
   .hero h1 {
     font-size: 22px;
   }
+
   .features-row {
     grid-template-columns: 1fr;
   }
+
   .success-card {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .success-card .btn-outline {
     margin-left: 0;
   }

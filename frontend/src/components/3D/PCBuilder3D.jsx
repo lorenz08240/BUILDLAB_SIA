@@ -15,16 +15,16 @@ function PartModel({ part, position, index, placedParts }) {
   if (part.category === 'case') {
     // Fake Scenario: If they dropped the MSI motherboard, swap the case texture!
     const hasMsiMobo = placedParts.some(p => p.id === 'msi-b450-tomahawk');
-    if (part.id === 'case1' && hasMsiMobo) {
+    if (part.id === 'case4' && hasMsiMobo) {
       texturePath = '/textures/case1-B450-TomHawk.png';
     } else {
       texturePath = `/textures/${part.id}.png`;
     }
   } else if (part.category === 'motherboard') {
-    // If it's the MSI motherboard and case1 is present, hide this block 
+    // If it's the MSI motherboard and case4 is present, hide this block 
     // because it's now merged into the case texture!
-    const hasCase1 = placedParts.some(p => p.id === 'case1');
-    if (part.id === 'msi-b450-tomahawk' && hasCase1) {
+    const hasCase4 = placedParts.some(p => p.id === 'case4');
+    if (part.id === 'msi-b450-tomahawk' && hasCase4) {
       isVisible = false;
     }
   }

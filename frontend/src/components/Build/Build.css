@@ -677,3 +677,24 @@
     grid-template-columns: 1fr;
   }
 }
+
+.btn-3d {
+  display: block;
+  width: 100%;
+  padding: 1rem;
+  background: var(--yellow);
+  color: var(--dark);
+  text-align: center;
+  text-decoration: none;
+  font-weight: 700;
+  border-radius: 12px;
+  margin-top: 1rem;
+  transition: all 0.2s ease;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.btn-3d:hover {
+  background: #eab308;
+  transform: translateY(-2px);
+}

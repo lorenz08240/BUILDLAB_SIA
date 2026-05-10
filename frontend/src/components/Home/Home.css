@@ -1,6 +1,7 @@
 /* General styles for the hero section */
 .hero {
-  background-color: #0d1117; /* Dark background */
+  background-color: #0d1117;
+  /* Dark background */
   color: white;
   text-align: center;
   padding: 4rem 2rem;
@@ -22,7 +23,7 @@
   z-index: 1;
 }
 
-.hero > * {
+.hero>* {
   position: relative;
   z-index: 2;
 }
@@ -30,7 +31,8 @@
 /* Hero badge */
 .hero-badge {
   font-size: 0.875rem;
-  color: #9ca3af; /* Light gray */
+  color: #9ca3af;
+  /* Light gray */
   display: inline-flex;
   align-items: center;
   margin-bottom: 1rem;
@@ -39,7 +41,8 @@
 .hero-badge .dot {
   width: 8px;
   height: 8px;
-  background-color: #22c55e; /* Green */
+  background-color: #22c55e;
+  /* Green */
   border-radius: 50%;
   margin-right: 0.5rem;
 }
@@ -52,13 +55,15 @@
 }
 
 .hero-title .yellow {
-  color: #facc15; /* Yellow */
+  color: #facc15;
+  /* Yellow */
 }
 
 /* Hero subtitle */
 .hero-sub {
   font-size: 1.125rem;
-  color: #9ca3af; /* Light gray */
+  color: #9ca3af;
+  /* Light gray */
   margin-top: 1rem;
   max-width: 800px;
   margin-left: auto;
@@ -103,7 +108,8 @@
 .btn-primary,
 .btn-secondary,
 .btn-outline {
-  background-color: #facc15; /* Yellow */
+  background-color: #facc15;
+  /* Yellow */
   color: #0f172a;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
@@ -116,14 +122,16 @@
 .btn-primary:hover,
 .btn-secondary:hover,
 .btn-outline:hover {
-  background-color: #facc15; /* Darker yellow */
+  background-color: #facc15;
+  /* Darker yellow */
 }
 
 /* Larger prominent buttons for hero section */
 .hero-main-btn {
   font-size: 1.25rem !important;
   padding: 1rem 2.5rem !important;
-  border-radius: 9999px !important; /* Pill shape */
+  border-radius: 9999px !important;
+  /* Pill shape */
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4) !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease !important;
 }
@@ -154,7 +162,8 @@
 }
 
 .feat-card {
-  background-color: rgba(255, 255, 255, 0.05); /* Semi-transparent */
+  background-color: rgba(255, 255, 255, 0.05);
+  /* Semi-transparent */
   padding: 1.5rem;
   border-radius: 0.5rem;
   text-align: center;
@@ -166,7 +175,8 @@
 .feat-icon {
   font-size: 2rem;
   margin-bottom: 1rem;
-  color: #facc15; /* Yellow */
+  color: #facc15;
+  /* Yellow */
 }
 
 .feat-card h4 {
@@ -184,7 +194,8 @@
 /* Hero arrow */
 .hero-arrow {
   font-size: 2rem;
-  color: #9ca3af; /* Light gray */
+  color: #9ca3af;
+  /* Light gray */
   margin-top: 2rem;
 }
 
@@ -399,7 +410,299 @@
   .welcome-title {
     font-size: 2.5rem;
   }
+
   .welcome-banner-content {
     padding: 2.5rem 1.5rem;
+  }
+}
+
+/* How It Works Section */
+.how-it-works {
+  background-color: #ffffff;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.how-it-works .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.how-it-works h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: #1f2937;
+}
+
+.steps-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.step-box {
+  background: #f9fafb;
+  padding: 2.5rem;
+  border-radius: 1rem;
+  position: relative;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease;
+}
+
+.step-box:hover {
+  transform: translateY(-5px);
+}
+
+.step-number {
+  width: 50px;
+  height: 50px;
+  background-color: #facc15;
+  color: #1f2937;
+  font-size: 1.5rem;
+  font-weight: bold;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 0 auto 1.5rem;
+  box-shadow: 0 4px 10px rgba(250, 204, 21, 0.4);
+}
+
+.step-box h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 1rem;
+}
+
+.step-box p {
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+/* Featured Builds Section */
+.featured-builds {
+  background-color: #0f172a;
+  /* Dark blue background */
+  color: white;
+  padding: 4rem 2rem;
+  text-align: center;
+}
+
+.featured-builds .container {
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+.featured-builds h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+  color: #ffffff;
+}
+
+.featured-builds .section-desc {
+  color: #94a3b8;
+}
+
+.builds-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 2rem;
+  margin-top: 3rem;
+}
+
+.build-card {
+  background: #1e293b;
+  border-radius: 1rem;
+  overflow: hidden;
+  position: relative;
+  text-align: left;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.build-card:hover {
+  transform: translateY(-5px);
+  box-shadow: 0 15px 30px rgba(0, 0, 0, 0.3);
+}
+
+.build-card.featured {
+  border: 2px solid #facc15;
+  transform: scale(1.05);
+}
+
+.build-card.featured:hover {
+  transform: scale(1.05) translateY(-5px);
+}
+
+.popular-badge {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background-color: #facc15;
+  color: #0f172a;
+  padding: 0.25rem 0.75rem;
+  border-radius: 9999px;
+  font-size: 0.75rem;
+  font-weight: bold;
+  z-index: 2;
+}
+
+.build-card img {
+  width: 100%;
+  height: 200px;
+  object-fit: cover;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+}
+
+.build-info {
+  padding: 1.5rem;
+}
+
+.build-info h3 {
+  font-size: 1.25rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+}
+
+.build-price {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: #facc15;
+  margin-bottom: 1rem;
+}
+
+.build-specs {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 1.5rem 0;
+  color: #cbd5e1;
+}
+
+.build-specs li {
+  margin-bottom: 0.5rem;
+  display: flex;
+  align-items: center;
+}
+
+.build-specs li::before {
+  content: "•";
+  color: #facc15;
+  font-weight: bold;
+  display: inline-block;
+  width: 1rem;
+}
+
+.build-card .btn-primary,
+.build-card .btn-outline {
+  display: block;
+  text-align: center;
+  width: 100%;
+  box-sizing: border-box;
+}
+
+.build-card .btn-outline {
+  background: transparent;
+  color: white;
+  border: 1px solid rgba(255, 255, 255, 0.3);
+}
+
+.build-card .btn-outline:hover {
+  background: rgba(255, 255, 255, 0.1);
+  border-color: white;
+}
+
+/* FAQ Section */
+.faq-section {
+  background-color: #f9fafb;
+  padding: 4rem 2rem;
+}
+
+.faq-section .container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.faq-section h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 3rem;
+  color: #1f2937;
+  text-align: center;
+}
+
+.faq-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.faq-item {
+  background: white;
+  padding: 1.5rem;
+  border-radius: 0.75rem;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  text-align: left;
+}
+
+.faq-item h4 {
+  font-size: 1.125rem;
+  font-weight: 700;
+  color: #1f2937;
+  margin-bottom: 0.5rem;
+}
+
+.faq-item p {
+  color: #6b7280;
+  line-height: 1.6;
+}
+
+/* Final CTA Section */
+.final-cta {
+  background-color: #facc15;
+  background-image: linear-gradient(135deg, #facc15 0%, #eab308 100%);
+  color: #0f172a;
+  padding: 5rem 2rem;
+  text-align: center;
+}
+
+.final-cta .container {
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.final-cta h2 {
+  font-size: 2.5rem;
+  font-weight: 800;
+  margin-bottom: 1rem;
+}
+
+.final-cta p {
+  font-size: 1.25rem;
+  margin-bottom: 2rem;
+  opacity: 0.9;
+}
+
+.final-cta .hero-main-btn {
+  background-color: #0f172a;
+  color: white;
+  border: 2px solid #0f172a;
+}
+
+.final-cta .hero-main-btn:hover {
+  background-color: transparent;
+  color: #0f172a;
+}
+
+@media (max-width: 768px) {
+  .build-card.featured {
+    transform: none;
+  }
+
+  .build-card.featured:hover {
+    transform: translateY(-5px);
   }
 }

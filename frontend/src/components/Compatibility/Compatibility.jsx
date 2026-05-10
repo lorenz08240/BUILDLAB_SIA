@@ -4,6 +4,26 @@ import { useBuild } from "../../contexts/BuildContext";
 import { checkCompatibility } from "../../utilities/rules";
 import "./Compatibility.css";
 
+/* Siguraduhin na ang Link ay may display properties */
+const saveSlotBtnStyle = {
+  display: "block",
+  width: "100%",
+  marginTop: "8px",
+  alignItems: "center",
+  justifyContent: "center",
+  textDecoration: "none",
+  border: "none",
+  padding: "10px 16px",
+  borderRadius: "var(--r-sm)",
+  borderRadius: "var(--r-sm)",
+  fontFamily: "var(--font-display)",
+  fontSize: "19px",
+  fontWeight: "700",
+  letterSpacing: "0.06em",
+  cursor: "pointer",
+  transition: "background 0.18s, color 0.18s",
+};
+
 export default function Compatibility() {
   const {
     currentBuild,
@@ -11,11 +31,29 @@ export default function Compatibility() {
     savedBuilds,
     selectedSaveSlot,
     setSelectedSaveSlot,
-    getSavedBuild,
+    getSavedBuild: originalGetSavedBuild,
     saveBuildSnapshot,
+    resetBuild,
   } = useBuild();
 
-  const selectedComponents = getSelectedComponents();
+  const getSavedBuild = (slot) => {
+    const b = savedBuilds[slot];
+    if (!b) return null;
+    return b;
+  };
+
+  const calculateBuildPrice = (build) => {
+    if (!build) return 0;
+    return Object.values(build).reduce((s, c) => {
+      if (!c || !c.price) return s;
+      return s + parsePrice(c.price);
+    }, 0);
+  };
+
+  const selectedComponents = getSelectedComponents().sort((a, b) => {
+    const order = ["cpu", "motherboard", "ram", "storage", "gpu", "psu", "case"];
+    return order.indexOf(a.category.toLowerCase()) - order.indexOf(b.category.toLowerCase());
+  });
   const [compareMode, setCompareMode] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
   const [bottleneckDismissed, setBottleneckDismissed] = useState(false);
@@ -118,7 +156,6 @@ export default function Compatibility() {
     const vals = metrics.map((m) => metricScore(build, m));
     return Math.round(vals.reduce((a, b) => a + b, 0) / metrics.length);
   };
-
   /* ── Radar ── */
   const getRadarPoints = (build) => {
     const cx = 130,
@@ -169,9 +206,9 @@ export default function Compatibility() {
   };
 
   /* ── Power estimate ── */
-  const estimateWattage = () => {
-    const cpu = currentBuild?.cpu;
-    const gpu = currentBuild?.gpu;
+  const estimateWattage = (build = currentBuild) => {
+    const cpu = build?.cpu;
+    const gpu = build?.gpu;
     const cpuW = cpu?.tdp || 65;
     const gpuW = gpu?.power_required || 0;
     return cpuW + gpuW + 60; // +60 for rest of system
@@ -182,12 +219,19 @@ export default function Compatibility() {
     (s, c) => s + parsePrice(c.price),
     0
   );
+
+  const slot1Build = getSavedBuild(0);
+  const slot2Build = getSavedBuild(1);
+  const slot1Price = calculateBuildPrice(slot1Build);
+  const slot2Price = calculateBuildPrice(slot2Build);
+
   const currentScore = getBuildScore(currentBuild);
   const savedScore = getBuildScore(savedBuild);
   const radarLabels = getRadarLabels();
   const currentPoints = getRadarPoints(currentBuild);
   const savedPoints = hasSavedBuild ? getRadarPoints(savedBuild) : "";
-  const estWattage = estimateWattage();
+  const estWattage = estimateWattage(currentBuild);
+  const savedWattage = estimateWattage(savedBuild);
 
   const handleSave = (slot) => {
     saveBuildSnapshot(slot);
@@ -264,7 +308,6 @@ export default function Compatibility() {
                   {selectedComponents.length} parts
                 </span>
               </div>
-
               <div className="components-list">
                 {selectedComponents.map((comp, i) => {
                   const isOk = !compatibilityIssues.some((iss) =>
@@ -486,94 +529,109 @@ export default function Compatibility() {
                   const count = sb
                     ? Object.values(sb).filter(Boolean).length
                     : 0;
-                  const price = sb
-                    ? Object.values(sb)
-                        .filter(Boolean)
-                        .reduce((s, c) => s + parsePrice(c.price), 0)
-                    : 0;
                   const isSelected = selectedSaveSlot === slot;
+                  const price = slot === 0 ? slot1Price : slot2Price;
+
                   return (
                     <div
                       key={slot}
-                      className={`slot-card ${
-                        isSelected ? "slot-selected" : ""
-                      } ${sb ? "slot-filled" : ""}`}
-                      onClick={() =>
-                        sb && (setSelectedSaveSlot(slot), setCompareMode(true))
-                      }
+                      className={`slot-card ${isSelected ? "slot-selected" : ""
+                        } ${sb ? "slot-filled" : ""}`}
                     >
                       <div className="slot-top-row">
-                        <div className="slot-info">
-                          <span className="slot-name">Slot {slot + 1}</span>
-                          {sb && <span className="slot-check">✓</span>}
-                        </div>
-                        <div className="slot-meta">
-                          {sb ? (
-                            <>
-                              <span className="slot-parts">{count} parts</span>
-                              <span className="slot-price">
-                                ₱{price.toLocaleString()}
-                              </span>
-                            </>
-                          ) : (
-                            <span className="slot-empty">Empty</span>
-                          )}
-                        </div>
+                        <span className="slot-name">BUILD {slot + 1}</span>
+                        {sb ? (
+                          <span className="slot-parts">{count} parts</span>
+                        ) : (
+                          <span className="slot-empty">Empty</span>
+                        )}
                       </div>
+                      {sb && (
+                        <div className="slot-price">
+                          Total: ₱{price.toLocaleString()}
+                        </div>
+                      )}
                       <div className="slot-btn-row">
-                        <button
-                          className="save-slot-btn save-slot-btn--save"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            handleSave(slot);
-                          }}
-                        >
-                          Save to Slot {slot + 1}
-                        </button>
+                        {!sb ? (
+                          <Link
+                            to="/build"
+                            className="save-slot-btn save-slot-btn--save"
+                            style={{
+                              ...saveSlotBtnStyle,
+                              margin: 0,
+                              textAlign: "center",
+                            }}
+                            onClick={() => {
+                              setSelectedSaveSlot(slot);
+                              resetBuild();
+                            }}
+                          >
+                            + Build Another PC
+                          </Link>
+                        ) : (
+                          <>
+                            <button
+                              className="save-slot-btn save-slot-btn--save"
+                              style={saveSlotBtnStyle}
+                              onClick={() => handleSave(slot)}
+                            >
+                              Save Current
+                            </button>
+                            <Link
+                              to="/build"
+                              className="save-slot-btn save-slot-btn--compare"
+                              style={{
+                                ...saveSlotBtnStyle,
+                                display: "block",
+                                textAlign: "center",
+                                boxSizing: "border-box",
+                              }}
+                              onClick={() => {
+                                setSelectedSaveSlot(slot);
+                                resetBuild();
+                              }}
+                            >
+                              BUILD NEW PC
+                            </Link>
+                          </>
+                        )}
                       </div>
                     </div>
                   );
                 })}
               </div>
 
-              {saveMessage && <div className="save-toast">{saveMessage}</div>}
-
-              {hasSavedBuild && (
-                <button
-                  className="compare-toggle"
-                  onClick={() => setCompareMode(!compareMode)}
-                >
-                  {compareMode ? "Hide Comparison" : "Compare Slot 1 vs Slot 2"}
-                </button>
-              )}
-
-              {compareMode && hasSavedBuild && (
+              {/* Comparison Section */}
+              {getSavedBuild(0) && getSavedBuild(1) && (
                 <div className="compare-diff">
-                  <div className="compare-diff-header">
-                    <h4>Comparing Slot 1 vs Slot {selectedSaveSlot + 1}</h4>
+                  <div className="diff-title">
+                    Builds Comparison
                   </div>
                   <div className="diff-grid">
                     <div className="diff-col">
-                      <div className="diff-head">Current</div>
-                      {selectedComponents.map((c, i) => (
-                        <div key={i} className="diff-item">
-                          {c.name}
-                        </div>
-                      ))}
+                      <div className="diff-head">Slot 1</div>
+                      {Object.entries(getSavedBuild(0))
+                        .filter(([, v]) => v)
+                        .map(([cat, comp], i) => (
+                          <div key={i} className="diff-item">
+                            {comp.name}
+                          </div>
+                        ))}
                     </div>
                     <div className="diff-col">
-                      <div className="diff-head">
-                        Slot {selectedSaveSlot + 1}
-                      </div>
-                      {savedComponents.map((c, i) => (
-                        <div key={i} className="diff-item">
-                          {c.name}
-                        </div>
-                      ))}
+                      <div className="diff-head">Slot 2</div>
+                      {Object.entries(getSavedBuild(1))
+                        .filter(([, v]) => v)
+                        .map(([cat, comp], i) => (
+                          <div key={i} className="diff-item">
+                            {comp.name}
+                          </div>
+                        ))}
                     </div>
                   </div>
                 </div>
               )}
+              {saveMessage && <div className="save-toast">{saveMessage}</div>}
             </div>
 
             {/* Price & Power Summary */}
@@ -581,26 +639,55 @@ export default function Compatibility() {
               <div className="sidebar-label">
                 REAL-TIME PRICE & POWER SUMMARY
               </div>
-              <div className="summary-rows">
-                <div className="summary-row">
-                  <span className="summary-lbl">TOTAL COST</span>
-                  <span className="summary-val summary-price">
-                    ₱{totalPrice.toLocaleString()}
-                  </span>
-                </div>
-                <div className="summary-row">
-                  <span className="summary-lbl">EST. WATTAGE</span>
-                  <span className="summary-val summary-watt">
-                    EST. {estWattage}W
-                  </span>
-                </div>
-                <div className="summary-row">
-                  <span className="summary-lbl">SYSTEM SCORE</span>
-                  <div className="score-badge-wrap">
-                    <span className="system-score">{currentScore}.0</span>
-                    <span className="score-max">/ 100</span>
+              <div className="summary-grid">
+                <div className="summary-col">
+                  <div className="summary-row">
+                    <span className="summary-lbl">CURRENT BUILD COST</span>
+                    <span className="summary-val summary-price">
+                      ₱{totalPrice.toLocaleString()}
+                    </span>
+                  </div>
+                  <div className="summary-row">
+                    <span className="summary-lbl">CURRENT WATTAGE</span>
+                    <span className="summary-val summary-watt">
+                      EST. {estWattage}W
+                    </span>
+                  </div>
+                  <div className="summary-row">
+                    <span className="summary-lbl">CURRENT SCORE</span>
+                    <div className="score-badge-wrap">
+                      <span className="system-score">{currentScore}.0</span>
+                      <span className="score-max">/ 100</span>
+                    </div>
                   </div>
                 </div>
+
+                {hasSavedBuild && (
+                  <>
+                    <div className="summary-divider" />
+                    <div className="summary-col">
+                      <div className="summary-row">
+                        <span className="summary-lbl">BUILD {selectedSaveSlot + 1} COST</span>
+                        <span className="summary-val summary-price" style={{ color: "var(--amber)" }}>
+                          ₱{(selectedSaveSlot === 0 ? slot1Price : slot2Price).toLocaleString()}
+                        </span>
+                      </div>
+                      <div className="summary-row">
+                        <span className="summary-lbl">BUILD {selectedSaveSlot + 1} WATTAGE</span>
+                        <span className="summary-val summary-watt" style={{ color: "var(--amber)" }}>
+                          EST. {savedWattage}W
+                        </span>
+                      </div>
+                      <div className="summary-row">
+                        <span className="summary-lbl">BUILD {selectedSaveSlot + 1} SCORE</span>
+                        <div className="score-badge-wrap">
+                          <span className="system-score" style={{ color: "var(--amber)" }}>{savedScore}.0</span>
+                          <span className="score-max">/ 100</span>
+                        </div>
+                      </div>
+                    </div>
+                  </>
+                )}
               </div>
             </div>
           </div>

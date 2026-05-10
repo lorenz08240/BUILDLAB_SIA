@@ -622,6 +622,9 @@ function Build() {
             <Link to="/compatibility" className="btn-outline">
               Check Compatibility
             </Link>
+            <Link to="/3d" className="btn-3d">
+              Launch 3D Builder
+            </Link>
           </div>
         </div>
 
