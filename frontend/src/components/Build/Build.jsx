@@ -4,7 +4,7 @@ import { useBuild } from "../../contexts/BuildContext";
 import "./Build.css";
 import { getCompatibilitySummary } from "../../utilities/rules";
 
-const buildSteps = [
+export const buildSteps = [
   {
     key: "case",
     label: "PC Case",
@@ -48,7 +48,7 @@ const buildSteps = [
     description: "Powers your entire system",
   },
 ];
-const componentsData = {
+export const componentsData = {
   case: [
     {
       id: "case1",
