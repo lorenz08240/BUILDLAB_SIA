@@ -6,33 +6,39 @@
   background-color: #0d1117;
   color: white;
   overflow: hidden;
-  padding-top: 80px; /* Prevent overlap with the fixed Navbar */
+  padding-top: 80px;
+  /* Prevent overlap with the fixed Navbar */
   box-sizing: border-box;
 }
 
 /* Sidebar Styling */
 .parts-sidebar {
-  width: 400px; /* Made wider to fit 2 columns */
+  width: 400px;
+  /* Made wider to fit 2 columns */
   background-color: #161b22;
   border-right: 1px solid #30363d;
   display: flex;
   flex-direction: column;
   z-index: 10;
   box-shadow: 5px 0 15px rgba(0, 0, 0, 0.3);
-  overflow-y: auto; /* Allow scrolling within sidebar */
+  overflow-y: auto;
+  /* Allow scrolling within sidebar */
 }
 
 /* Custom Scrollbar for sidebar */
 .parts-sidebar::-webkit-scrollbar {
   width: 8px;
 }
+
 .parts-sidebar::-webkit-scrollbar-track {
   background: #0d1117;
 }
+
 .parts-sidebar::-webkit-scrollbar-thumb {
   background: #30363d;
   border-radius: 4px;
 }
+
 .parts-sidebar::-webkit-scrollbar-thumb:hover {
   background: #4b5563;
 }
@@ -152,7 +158,8 @@
   height: 100px;
   object-fit: cover;
   border-bottom: 1px solid #30363d;
-  background-color: white; /* to handle transparent pngs */
+  background-color: white;
+  /* to handle transparent pngs */
 }
 
 .comp-info {
