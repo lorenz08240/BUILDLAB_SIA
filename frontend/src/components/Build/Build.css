@@ -12,18 +12,13 @@
 
 /* -- BUILD SECTION -- */
 .build-page {
+  background: var(--bg-page);
   min-height: 100vh;
-  /* Deep charcoal background with overlay */
-  background: linear-gradient(rgba(13, 17, 23, 0.95), rgba(13, 17, 23, 0.95)),
-    url("https://i.pinimg.com/1200x/73/92/4f/73924f572c47452d5bcfc7e57d98dc45.jpg");
-
-  background-size: cover;
-  background-position: center;
-  background-attachment: fixed; /* Mananatili ang image habang nag-scroll ka */
-
-  /* Text & Global Dark Styles */
-  color: var(--text);
-  padding: 100px 20px;
+  color: var(--text-primary);
+  font-family: var(--font-body);
+  padding-bottom: 80px;
+  position: relative;
+  overflow-x: hidden;
 }
 
 .build-hero {
@@ -319,6 +314,24 @@
   border-color: rgba(255, 255, 255, 0.3);
 }
 
+.reset-build-btn {
+  background: rgba(239, 68, 68, 0.1);
+  color: #f87171;
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 8px 16px;
+  border-radius: 8px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: 0.3s;
+  font-size: 12px;
+  text-transform: uppercase;
+}
+
+.reset-build-btn:hover {
+  background: #ef4444;
+  color: white;
+}
+
 .build-content {
   background: rgba(255, 255, 255, 0.03);
   border-radius: 32px;
@@ -388,7 +401,7 @@
 
 .search-input {
   width: 100%;
-  padding: 20px 48px 20px 24px;
+  padding: 20px 24px;
   border-radius: 20px;
   border: 1px solid rgba(255, 255, 255, 0.08);
   background: rgba(255, 255, 255, 0.03);
@@ -408,7 +421,7 @@
 
 .search-icon {
   position: absolute;
-  right: 16px;
+  right: 24px;
   top: 50%;
   transform: translateY(-50%);
   color: var(--muted);
@@ -557,7 +570,7 @@
 .hero-landing {
   width: 100%;
   max-width: 100%;
-  margin-top: 0;
+  margin-top: 90px;
   margin-bottom: 90px;
   min-height: 350px;
   display: flex;

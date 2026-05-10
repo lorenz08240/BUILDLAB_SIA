@@ -1,10 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import { Link } from "react-router-dom"; // Import Link from react-router-dom
 import "./Home.css"; // Import the CSS file for styling
 
+let hasSeenBannerThisSession = false;
+
 function Hero() {
+  const [isBannerVisible, setIsBannerVisible] = useState(!hasSeenBannerThisSession);
+  const [isFadingOut, setIsFadingOut] = useState(false);
+
+  const handleStartBuild = () => {
+    setIsFadingOut(true);
+    hasSeenBannerThisSession = true;
+    setTimeout(() => {
+      setIsBannerVisible(false);
+    }, 500); // Wait for the 0.5s fade-out animation to complete
+  };
+
   return (
     <>
+      {isBannerVisible && (
+        <div className={`welcome-banner ${isFadingOut ? "fade-out" : ""}`}>
+          <div className="welcome-banner-content">
+            <h1 className="welcome-title">
+              Welcome to <span className="yellow">BuildLab</span>
+            </h1>
+            <p className="welcome-text">Your ultimate PC building simulator.</p>
+            <button className="btn-primary banner-btn" onClick={handleStartBuild}>
+              START BUILD NOW
+            </button>
+          </div>
+        </div>
+      )}
       <section id="welcome" className="hero">
         <div className="hero-badge"></div>
 
@@ -38,13 +64,13 @@ function Hero() {
         </div>
 
         <div className="hero-btns">
-          <Link to="/build" className="btn-primary">
+          <Link to="/build" className="btn-primary hero-main-btn">
             {" "}
             Start Building Now
           </Link>
-          <Link to="/learn" className="btn-secondary">
+          <Link to="/learn" className="btn-secondary hero-main-btn">
             {" "}
-            Learn Section
+            Explore Resources
           </Link>
         </div>
 
@@ -71,18 +97,6 @@ function Hero() {
             <div className="feat-icon"></div>
             <h4>Build Summary</h4>
             <p>Detailed report with performance benchmarks</p>
-          </div>
-
-          <div className="feat-card">
-            <div className="feat-icon"></div>
-            <h4>Save Money</h4>
-            <p>Build for 30-50% less than pre-built systems</p>
-          </div>
-
-          <div className="feat-card">
-            <div className="feat-icon"></div>
-            <h4>Future-Proof</h4>
-            <p>Upgrade easily with modular component design</p>
           </div>
         </div>
       </section>
@@ -138,33 +152,65 @@ function Hero() {
               </p>
             </div>
           </div>
+        </div>
+      </section>
 
-          <div className="testimonials">
-            <h3>What Our Builders Say</h3>
-            <div className="testimonial-grid">
-              <div className="testimonial">
-                <p>
-                  "BuildLab made my first PC build stress-free. The
-                  compatibility checks saved me from disaster!"
-                </p>
-                <cite>- Alex Chen, Gamer</cite>
-              </div>
-              <div className="testimonial">
-                <p>
-                  "As a student, learning PC building here was invaluable. Now I
-                  can upgrade my own rig confidently."
-                </p>
-                <cite>- Maria Rodriguez, Student</cite>
-              </div>
-              <div className="testimonial">
-                <p>
-                  "Saved $500 compared to buying pre-built. The tutorials are
-                  amazing for beginners."
-                </p>
-                <cite>- James Wilson, Content Creator</cite>
-              </div>
+      {/* How It Works Section */}
+      <section id="how-it-works" className="how-it-works">
+        <div className="container">
+          <h2>How BuildLab Works</h2>
+          <p className="section-desc">Three simple steps to your perfect custom PC.</p>
+          <div className="steps-container">
+            <div className="step-box">
+              <div className="step-number">1</div>
+              <h3>Select Parts</h3>
+              <p>Browse our database of components with real-time prices and specs.</p>
+            </div>
+            <div className="step-box">
+              <div className="step-number">2</div>
+              <h3>Check Compatibility</h3>
+              <p>Our system ensures all your chosen parts will work together flawlessly.</p>
+            </div>
+            <div className="step-box">
+              <div className="step-number">3</div>
+              <h3>Build & Enjoy</h3>
+              <p>Follow our guides to assemble your PC and start gaming or working!</p>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section id="faq" className="faq-section">
+        <div className="container">
+          <h2>Frequently Asked Questions</h2>
+          <div className="faq-grid">
+            <div className="faq-item">
+              <h4>Is it hard to build a PC?</h4>
+              <p>Not at all! With our compatibility checker and online tutorials, it's like putting together high-tech LEGOs.</p>
+            </div>
+            <div className="faq-item">
+              <h4>What if I pick parts that don't fit?</h4>
+              <p>Our platform automatically flags incompatibilities, like wrong socket types or inadequate power supplies.</p>
+            </div>
+            <div className="faq-item">
+              <h4>Does BuildLab sell parts?</h4>
+              <p>We are a planning tool. We aggregate prices from top retailers to help you find the best deals.</p>
+            </div>
+            <div className="faq-item">
+              <h4>How do I know what parts I need?</h4>
+              <p>Start with our "Explore Resources" section to learn the basics, or check out our Featured Builds for templates.</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Final CTA Section */}
+      <section className="final-cta">
+        <div className="container">
+          <h2>Ready to Build Your Dream PC?</h2>
+          <p>Join thousands of users who have successfully planned their builds with BuildLab.</p>
+          <Link to="/build" className="btn-primary hero-main-btn">Start Your Build</Link>
         </div>
       </section>
     </>

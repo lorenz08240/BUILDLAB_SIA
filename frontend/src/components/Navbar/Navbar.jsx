@@ -26,9 +26,6 @@ function Navbar() {
           <Link to="/learn" className="navbar-link">
             Learn
           </Link>
-          <button onClick={resetBuild} className="navbar-reset">
-            Reset Build
-          </button>
         </div>
       </div>
     </nav>

@@ -35,6 +35,7 @@
   margin: 16px 0;
   background: linear-gradient(180deg, #fff 0%, #94a3b8 100%);
   -webkit-background-clip: text;
+  background-clip: text;
   -webkit-text-fill-color: transparent;
 }
 .learn-hero-new p {
@@ -225,7 +226,7 @@
   transition: transform 0.3s, box-shadow 0.3s;
 }
 .learn-page .component-card:hover {
-  transform: translateY(-5px);
+  transform: translateY(-50px);
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
 }
 .learn-page .component-card.active {
@@ -253,22 +254,7 @@
   color: #f8fafc;
   margin-bottom: 8px;
 }
-.learn-page .difficulty-badge {
-  display: inline-block;
-  padding: 4px 8px;
-  border-radius: 999px;
-  font-size: 10px;
-  font-weight: 700;
-  text-transform: uppercase;
-}
-.learn-page .difficulty-badge.critical {
-  background: #f87171;
-  color: #fee2e2;
-}
-.learn-page .difficulty-badge.important {
-  background: #fbbf24;
-  color: #fef3c7;
-}
+
 .learn-page .card-content p {
   font-size: 12px;
   color: #94a3b8;
@@ -308,6 +294,40 @@
   margin-top: 4px;
 }
 
+/* Content Cards Grid */
+.detail-cards-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 24px;
+  margin-top: 24px;
+}
+.content-card {
+  background: rgba(30, 41, 59, 0.3);
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 16px;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  transition: transform 0.3s ease, border-color 0.3s ease;
+}
+.content-card:hover {
+  border-color: rgba(56, 189, 248, 0.3);
+  transform: translateY(-2px);
+}
+.content-card .section-title {
+  margin-top: 0 !important;
+  margin-bottom: 16px;
+  font-size: 20px;
+  color: #38bdf8;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+  padding-bottom: 12px;
+}
+.content-card .card-text {
+  color: #94a3b8;
+  line-height: 1.6;
+  font-size: 14px;
+}
+
 /* Specs Table */
 .specs-grid {
   display: grid;
@@ -338,40 +358,38 @@
   margin-top: 4px;
 }
 
-/* Pro Tips */
-.tips-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+/* ── Tips Grid ── */
+.tips-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
   margin-top: 12px;
 }
+
 .tip-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  background: rgba(16, 185, 129, 0.05);
+  border: 1px solid rgba(16, 185, 129, 0.2);
+  padding: 16px;
+  border-radius: 12px;
   font-size: 14px;
   color: #10b981;
 }
-.tip-dot {
-  font-size: 16px;
-}
 
-/* Common Mistakes */
-.mistakes-list {
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+/* Common Mistakes Grid */
+.mistakes-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 16px;
   margin-top: 12px;
 }
+
 .mistake-item {
-  display: flex;
-  align-items: center;
-  gap: 8px;
+  background: rgba(239, 68, 68, 0.05);
+  border: 1px solid rgba(239, 68, 68, 0.2);
+  padding: 16px;
+  border-radius: 12px;
   font-size: 14px;
   color: #f87171;
-}
-.mistake-icon {
-  font-size: 16px;
 }
 
 /* Best For */
@@ -401,7 +419,7 @@
 /* Brands */
 .brands-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
   gap: 16px;
   margin-top: 12px;
 }
@@ -495,7 +513,8 @@
 
 @media (max-width: 980px) {
   .learn-hero,
-  .learn-grid {
+  .learn-grid,
+  .detail-cards-grid {
     grid-template-columns: 1fr;
   }
 }

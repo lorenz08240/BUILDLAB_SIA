@@ -198,7 +198,7 @@
   border-radius: var(--r-md);
   font-weight: 700;
   font-family: var(--font-display);
-  font-size: 14px;
+  font-size: 19px;
   letter-spacing: 0.04em;
   text-decoration: none;
   border: none;
@@ -221,7 +221,7 @@
   border-radius: var(--r-md);
   font-family: var(--font-display);
   font-weight: 600;
-  font-size: 14px;
+  font-size: 19px;
   letter-spacing: 0.04em;
   text-decoration: none;
   cursor: pointer;
@@ -270,7 +270,7 @@
 
 .panel-title {
   font-family: var(--font-display);
-  font-size: 15px;
+  font-size: 23px;
   font-weight: 600;
   color: var(--text-primary);
   display: flex;
@@ -285,7 +285,7 @@
 }
 
 .parts-count {
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 600;
   font-family: var(--font-display);
   letter-spacing: 0.06em;
@@ -326,7 +326,7 @@
   background: var(--bg-raised);
   border: 1px solid var(--border-mid);
   color: var(--text-secondary);
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 700;
   font-family: var(--font-display);
   letter-spacing: 0.1em;
@@ -338,13 +338,13 @@
   margin-left: auto;
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 16px;
   color: var(--text-primary);
 }
 
 /* ── Status badge ── */
 .status-badge {
-  font-size: 10px;
+  font-size: 15px;
   font-weight: 700;
   font-family: var(--font-display);
   letter-spacing: 0.06em;
@@ -391,7 +391,7 @@
 }
 
 .comp-info h4 {
-  font-size: 13px;
+  font-size: 19px;
   font-weight: 600;
   color: var(--text-primary);
   margin-bottom: 4px;
@@ -399,7 +399,7 @@
 }
 
 .comp-info p {
-  font-size: 12px;
+  font-size: 15px;
   color: var(--text-secondary);
   margin-bottom: 8px;
   line-height: 1.5;
@@ -528,7 +528,7 @@
   border-radius: var(--r-md);
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 13px;
+  font-size: 19px;
   letter-spacing: 0.05em;
   text-decoration: none;
   cursor: pointer;
@@ -637,7 +637,7 @@
 }
 
 .sidebar-label {
-  font-size: 9px;
+  font-size: 15px;
   font-weight: 700;
   font-family: var(--font-display);
   letter-spacing: 0.15em;
@@ -648,7 +648,7 @@
 
 .sidebar-title {
   font-family: var(--font-display);
-  font-size: 16px;
+  font-size: 23px;
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: 0.04em;
@@ -775,7 +775,7 @@
 
 .score-num {
   font-family: var(--font-display);
-  font-size: 30px;
+  font-size: 35px;
   font-weight: 700;
   color: var(--green);
   line-height: 1;
@@ -808,7 +808,7 @@
   display: flex;
   flex-direction: column;
   gap: 8px;
-  margin-bottom: 12px;
+  margin-bottom: 16px;
 }
 
 .slot-card {
@@ -847,7 +847,7 @@
 
 .slot-name {
   font-family: var(--font-display);
-  font-size: 13px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text-primary);
   letter-spacing: 0.04em;
@@ -868,19 +868,19 @@
   gap: 8px;
 }
 .slot-parts {
-  font-size: 11px;
+  font-size: 15px;
   color: var(--text-muted);
 }
 
 .slot-price {
   font-family: var(--font-display);
-  font-size: 12px;
+  font-size: 15px;
   font-weight: 700;
   color: var(--text-secondary);
 }
 
 .slot-empty {
-  font-size: 11px;
+  font-size: 15px;
   color: var(--text-muted);
   font-style: italic;
 }
@@ -896,7 +896,7 @@
   padding: 7px 10px;
   border-radius: var(--r-sm);
   font-family: var(--font-display);
-  font-size: 11px;
+  font-size: 15px;
   font-weight: 700;
   letter-spacing: 0.06em;
   cursor: pointer;
@@ -947,7 +947,7 @@
   border-radius: var(--r-md);
   font-family: var(--font-display);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 19px;
   letter-spacing: 0.06em;
   cursor: pointer;
   margin-bottom: 12px;
@@ -987,7 +987,7 @@
 }
 
 .diff-head {
-  font-size: 12px;
+  font-size: 15px;
   font-family: var(--font-display);
   font-weight: 700;
   color: var(--text-muted);
@@ -1000,8 +1000,8 @@
   background: var(--bg-panel);
   border: 1px solid var(--border-dim);
   border-radius: var(--r-sm);
-  padding: 10px;
-  font-size: 12px;
+  padding: 15px;
+  font-size: 15px;
   color: var(--text-secondary);
   font-weight: 500;
   white-space: nowrap;
@@ -1010,11 +1010,24 @@
 }
 
 /* ── Summary card ── */
-.summary-rows {
+.summary-grid {
+  display: flex;
+  gap: 16px;
+  justify-content: space-between;
+  margin-bottom: 16px;
+}
+
+.summary-col {
+  flex: 1;
   display: flex;
   flex-direction: column;
-  gap: 14px;
-  margin-bottom: 18px;
+  gap: 16px;
+}
+
+.summary-divider {
+  width: 1px;
+  background: var(--border-dim);
+  margin: 0 8px;
 }
 
 .summary-row {
@@ -1024,7 +1037,7 @@
 }
 
 .summary-lbl {
-  font-size: 9px;
+  font-size: 14px;
   font-family: var(--font-display);
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -1039,13 +1052,13 @@
 }
 
 .summary-price {
-  font-size: 26px;
+  font-size: 30px;
   color: var(--text-primary);
   letter-spacing: -0.01em;
 }
 
 .summary-watt {
-  font-size: 20px;
+  font-size: 25px;
   color: var(--green);
   letter-spacing: 0.02em;
 }
@@ -1058,7 +1071,7 @@
 
 .system-score {
   font-family: var(--font-display);
-  font-size: 28px;
+  font-size: 35px;
   font-weight: 700;
   color: var(--green);
   letter-spacing: -0.01em;

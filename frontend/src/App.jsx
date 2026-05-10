@@ -1,5 +1,10 @@
-import React from "react";
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import React, { useEffect } from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  useLocation,
+} from "react-router-dom";
 import { BuildProvider } from "./contexts/BuildContext";
 import Navbar from "./components/Navbar/Navbar";
 import Home from "./components/Home/Home";
@@ -7,10 +12,19 @@ import Build from "./components/Build/Build";
 import Compatibility from "./components/Compatibility/Compatibility";
 import Learn from "./components/Learn/Learn";
 
+function ScrollToTop() {
+  const { pathname } = useLocation();
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+  return null;
+}
+
 function App() {
   return (
     <BuildProvider>
       <Router>
+        <ScrollToTop />
         <div className="min-h-screen bg-buildlab-dark">
           <Navbar />
           <Routes>

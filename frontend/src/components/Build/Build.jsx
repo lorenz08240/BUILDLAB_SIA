@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import { useBuild } from "../../contexts/BuildContext";
 import "./Build.css";
+import { getCompatibilitySummary } from "../../utilities/rules";
 
 const buildSteps = [
   {
@@ -94,7 +95,7 @@ const componentsData = {
     },
     {
       id: "case5",
-      img: "https://i.pinimg.com/1200x/f7/01/87/f70187bac1a9faf14497d74db0edfb32.jpg",
+      img: "https://i.pinimg.com/736x/bb/23/bb/bb23bb46c317d5494bab81fe333c6c64.jpg",
       alt: "Phanteks Eclipse P500A",
       brand: "Phanteks",
       name: "Eclipse P500A D-RGB",
@@ -473,10 +474,21 @@ const componentsData = {
 };
 
 function Build() {
-  const { currentBuild, addComponent, removeComponent, getSelectedComponents } =
-    useBuild();
+  const {
+    currentBuild,
+    addComponent,
+    removeComponent,
+    getSelectedComponents,
+    resetBuild,
+  } = useBuild();
   const [currentStep, setCurrentStep] = useState(0);
   const [searchQuery, setSearchQuery] = useState("");
+
+  // I-derive ang issues gamit ang componentsData na nasa file na ito
+  const compatibilityIssues = getCompatibilitySummary(
+    currentBuild,
+    componentsData
+  );
 
   const selectedComponents = getSelectedComponents();
 
@@ -497,6 +509,11 @@ function Build() {
     }
   };
 
+  const handleReset = () => {
+    resetBuild();
+    setCurrentStep(0); // Balik sa Step 1 (PC Case)
+  };
+
   const isStepLocked = (stepIndex) => {
     // Lock steps based on the previous step's completion
     if (stepIndex > 0) {
@@ -505,7 +522,6 @@ function Build() {
     }
     return false;
   };
-
   const currentCategory = buildSteps[currentStep].key;
   const currentComponents = componentsData[currentCategory] || [];
   const selectedComponent = currentBuild[currentCategory];
@@ -636,6 +652,10 @@ function Build() {
                 {currentStepData.description.toUpperCase()}
               </span>
             </div>
+            {/* Reset Button moved to top right corner */}
+            <button onClick={handleReset} className="reset-build-btn">
+              Reset Build
+            </button>
           </div>
 
           <div className="search-container">
@@ -646,7 +666,6 @@ function Build() {
               onChange={(e) => setSearchQuery(e.target.value)}
               className="search-input"
             />
-            <span className="search-icon">🔍</span>
             {searchQuery && (
               <span className="search-results-count">
                 {filteredComponents.length} result
@@ -654,7 +673,6 @@ function Build() {
               </span>
             )}
           </div>
-
           <div className="components-grid">
             {filteredComponents.map((component) => (
               <div
