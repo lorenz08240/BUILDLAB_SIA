@@ -1,17 +1,9 @@
-<<<<<<< HEAD
-import React, { createContext, useContext, useEffect, useState } from 'react';
-=======
 import React, { createContext, useContext, useEffect, useState } from "react";
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
 
 // Build Context for managing selected components
 const BuildContext = createContext();
 
-<<<<<<< HEAD
-const STORAGE_KEY = 'buildLabSavedBuilds';
-=======
 const STORAGE_KEY = "buildLabSavedBuilds";
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
 
 // Build Provider component
 export const BuildProvider = ({ children }) => {
@@ -75,11 +67,7 @@ export const BuildProvider = ({ children }) => {
   }, [savedBuilds]);
 
   const saveBuildSnapshot = (slotIndex = selectedSaveSlot) => {
-<<<<<<< HEAD
-    setSavedBuilds(prev => {
-=======
     setSavedBuilds((prev) => {
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
       const newBuilds = [...prev];
       newBuilds[slotIndex] = currentBuild;
       return newBuilds;
@@ -101,22 +89,6 @@ export const BuildProvider = ({ children }) => {
   };
 
   return (
-<<<<<<< HEAD
-    <BuildContext.Provider value={{
-      currentBuild,
-      compatibilityResults,
-      savedBuilds,
-      selectedSaveSlot,
-      setSelectedSaveSlot,
-      addComponent,
-      removeComponent,
-      resetBuild,
-      getSelectedComponents,
-      saveBuildSnapshot,
-      getSavedBuild,
-      setCompatibilityResults
-    }}>
-=======
     <BuildContext.Provider
       value={{
         currentBuild,
@@ -133,7 +105,6 @@ export const BuildProvider = ({ children }) => {
         setCompatibilityResults,
       }}
     >
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
       {children}
     </BuildContext.Provider>
   );

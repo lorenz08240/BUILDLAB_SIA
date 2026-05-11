@@ -54,47 +54,47 @@ export const checkCompatibility = (currentBuild, nextPart) => {
       };
     }
   }
-}
 
-// 6. PSU vs GPU (Reverse check)
-if (currentBuild.psu && nextPart.category === 'gpu') {
-  if (currentBuild.psu.wattage < nextPart.power_required) {
-    return {
-      compatible: false,
-      reason: `Insufficient Power! This GPU requires ${nextPart.power_required}W, but your PSU only provides ${currentBuild.psu.wattage}W.`,
-      tip: "Choose a PSU with a higher wattage than the total power requirements of your system."
-    };
+  // 6. PSU vs GPU (Reverse check)
+  if (currentBuild.psu && nextPart.category === 'gpu') {
+    if (currentBuild.psu.wattage < nextPart.power_required) {
+      return {
+        compatible: false,
+        reason: `Insufficient Power! This GPU requires ${nextPart.power_required}W, but your PSU only provides ${currentBuild.psu.wattage}W.`,
+        tip: "Choose a PSU with a higher wattage than the total power requirements of your system."
+      };
+    }
   }
-}
 
 
-// 7. Case Form Factor Compatibility (Basic check)
-if (currentBuild.case && nextPart.category === 'motherboard') {
-  // This is a simplified check - in reality, cases support multiple form factors
-  const supportedFormFactors = ['ATX', 'mATX', 'Mini-ITX'];
-  if (!supportedFormFactors.includes(nextPart.form_factor || 'ATX')) {
-    return {
-      compatible: false,
-      reason: `Form Factor Issue! Your case may not support the ${nextPart.form_factor || 'ATX'} motherboard form factor.`,
-      tip: "Check the case specifications for supported motherboard form factors."
-    };
+  // 7. Case Form Factor Compatibility (Basic check)
+  if (currentBuild.case && nextPart.category === 'motherboard') {
+    // This is a simplified check - in reality, cases support multiple form factors
+    const supportedFormFactors = ['ATX', 'mATX', 'Mini-ITX'];
+    if (!supportedFormFactors.includes(nextPart.form_factor || 'ATX')) {
+      return {
+        compatible: false,
+        reason: `Form Factor Issue! Your case may not support the ${nextPart.form_factor || 'ATX'} motherboard form factor.`,
+        tip: "Check the case specifications for supported motherboard form factors."
+      };
+    }
   }
-}
 
 
-// 4. GPU Power Requirements vs PSU
-if (currentBuild.gpu && nextPart.category === "psu") {
-  const recommendedWattage = (currentBuild.gpu.power_required || 200) + 250;
-  if (nextPart.wattage < recommendedWattage) {
-    return {
-      compatible: false,
-      reason: `Insufficient Power! Your system requires ~${recommendedWattage}W for stability, but this PSU provides only ${nextPart.wattage}W.`,
-      tip: `We recommend upgrading to a 750W or 850W power supply for better system stability.`,
-    };
+  // 4. GPU Power Requirements vs PSU
+  if (currentBuild.gpu && nextPart.category === "psu") {
+    const recommendedWattage = (currentBuild.gpu.power_required || 200) + 250;
+    if (nextPart.wattage < recommendedWattage) {
+      return {
+        compatible: false,
+        reason: `Insufficient Power! Your system requires ~${recommendedWattage}W for stability, but this PSU provides only ${nextPart.wattage}W.`,
+        tip: `We recommend upgrading to a 750W or 850W power supply for better system stability.`,
+      };
+    }
   }
-}
 
-return { compatible: true, message: "Compatible! Great selection." };
+  return { compatible: true, message: "Compatible! Great selection." };
+};
 
 // Calculate total system power requirements
 export const calculatePowerRequirements = (build) => {

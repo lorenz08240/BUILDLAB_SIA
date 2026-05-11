@@ -13,6 +13,16 @@ import Compatibility from "./components/Compatibility/Compatibility";
 import Learn from "./components/Learn/Learn";
 import Brands from "./components/Brands/Brands";
 
+const ScrollToTop = () => {
+  const { pathname } = useLocation();
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [pathname]);
+
+  return null;
+};
+
 function App() {
   return (
     <BuildProvider>
