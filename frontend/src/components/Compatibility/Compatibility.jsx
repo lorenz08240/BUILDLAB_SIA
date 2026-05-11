@@ -74,9 +74,8 @@ export default function Compatibility() {
   const hasSavedBuild = Boolean(savedBuild && savedComponents.length > 0);
   const metrics = ["CPU", "GPU", "RAM", "SSD", "PSU"];
 
-  /* ── Scoring ── */
   const getCpuScore = (cpu) => {
-    if (!cpu || !Array.isArray(cpu.tags)) return 0; // Dagdagan ng check
+    if (!cpu || !Array.isArray(cpu.tags)) return 0;
     const tag = cpu.tags.find((t) => /\d+\s*cores?/i.test(t));
     const cores = tag ? parseInt(tag.match(/(\d+)/)[1], 10) : 4;
     if (cores >= 24) return 100;
