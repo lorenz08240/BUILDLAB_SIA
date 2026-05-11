@@ -11,15 +11,17 @@ import Home from "./components/Home/Home";
 import Build from "./components/Build/Build";
 import Compatibility from "./components/Compatibility/Compatibility";
 import Learn from "./components/Learn/Learn";
-import PCBuilder3D from "./components/3D/PCBuilder3D";
+import Brands from "./components/Brands/Brands";
 
-function ScrollToTop() {
+const ScrollToTop = () => {
   const { pathname } = useLocation();
+
   useEffect(() => {
     window.scrollTo(0, 0);
   }, [pathname]);
+
   return null;
-}
+};
 
 function App() {
   return (
@@ -41,8 +43,9 @@ function App() {
             {/* Learn Page */}
             <Route path="/learn" element={<Learn />} />
 
-            {/* 3D Builder Page */}
-            <Route path="/3d" element={<PCBuilder3D />} />
+            {/* Brands Page */}
+            <Route path="/brands" element={<Brands />} />
+
           </Routes>
         </div>
       </Router>

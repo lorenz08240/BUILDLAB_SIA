@@ -20,11 +20,20 @@
   -webkit-text-fill-color: transparent;
 }
 
-.brands-header p {
-  color: #94a3b8;
-  font-size: 1.25rem;
-  max-width: 600px;
+.brands-description {
+  max-width: 800px;
   margin: 0 auto;
+  color: #94a3b8;
+}
+
+.brands-description p {
+  font-size: 1.1rem;
+  line-height: 1.6;
+  margin-bottom: 20px;
+}
+
+.brands-description p:last-child {
+  margin-bottom: 0;
 }
 
 .brands-showcase-grid {
@@ -39,11 +48,11 @@
   background: rgba(30, 41, 59, 0.5);
   border: 1px solid rgba(255, 255, 255, 0.08);
   border-radius: 20px;
-  padding: 30px;
+  padding: 20px;
   transition: transform 0.3s ease, border-color 0.3s ease;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  display: fill;
+  align-items: fill;
+  justify-content: fill;
   height: 160px;
 }
 
@@ -53,9 +62,9 @@
 }
 
 .brand-logo-img {
-  max-width: 100%;
-  max-height: 100%;
-  object-fit: contain;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   filter: grayscale(100%) brightness(200%);
   transition: filter 0.3s ease;
 }

@@ -1,6 +1,7 @@
 /* General styles for the hero section */
 .hero {
-  background-color: #0d1117; /* Dark background */
+  background-color: #0d1117;
+  /* Dark background */
   color: white;
   text-align: center;
   padding: 4rem 2rem;
@@ -22,7 +23,7 @@
   z-index: 1;
 }
 
-.hero > * {
+.hero>* {
   position: relative;
   z-index: 2;
 }
@@ -30,7 +31,8 @@
 /* Hero badge */
 .hero-badge {
   font-size: 0.875rem;
-  color: #9ca3af; /* Light gray */
+  color: #9ca3af;
+  /* Light gray */
   display: inline-flex;
   align-items: center;
   margin-bottom: 1rem;
@@ -39,7 +41,8 @@
 .hero-badge .dot {
   width: 8px;
   height: 8px;
-  background-color: #22c55e; /* Green */
+  background-color: #22c55e;
+  /* Green */
   border-radius: 50%;
   margin-right: 0.5rem;
 }
@@ -52,13 +55,15 @@
 }
 
 .hero-title .yellow {
-  color: #facc15; /* Yellow */
+  color: #facc15;
+  /* Yellow */
 }
 
 /* Hero subtitle */
 .hero-sub {
   font-size: 1.125rem;
-  color: #9ca3af; /* Light gray */
+  color: #9ca3af;
+  /* Light gray */
   margin-top: 1rem;
   max-width: 800px;
   margin-left: auto;
@@ -103,7 +108,8 @@
 .btn-primary,
 .btn-secondary,
 .btn-outline {
-  background-color: #facc15; /* Yellow */
+  background-color: #facc15;
+  /* Yellow */
   color: #0f172a;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
@@ -116,14 +122,16 @@
 .btn-primary:hover,
 .btn-secondary:hover,
 .btn-outline:hover {
-  background-color: #facc15; /* Darker yellow */
+  background-color: #facc15;
+  /* Darker yellow */
 }
 
 /* Larger prominent buttons for hero section */
 .hero-main-btn {
   font-size: 1.25rem !important;
   padding: 1rem 2.5rem !important;
-  border-radius: 9999px !important; /* Pill shape */
+  border-radius: 9999px !important;
+  /* Pill shape */
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4) !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease !important;
 }
@@ -154,7 +162,8 @@
 }
 
 .feat-card {
-  background-color: rgba(255, 255, 255, 0.05); /* Semi-transparent */
+  background-color: rgba(255, 255, 255, 0.05);
+  /* Semi-transparent */
   padding: 1.5rem;
   border-radius: 0.5rem;
   text-align: center;
@@ -166,7 +175,8 @@
 .feat-icon {
   font-size: 2rem;
   margin-bottom: 1rem;
-  color: #facc15; /* Yellow */
+  color: #facc15;
+  /* Yellow */
 }
 
 .feat-card h4 {
@@ -184,7 +194,8 @@
 /* Hero arrow */
 .hero-arrow {
   font-size: 2rem;
-  color: #9ca3af; /* Light gray */
+  color: #9ca3af;
+  /* Light gray */
   margin-top: 2rem;
 }
 
@@ -399,6 +410,7 @@
   .welcome-title {
     font-size: 2.5rem;
   }
+
   .welcome-banner-content {
     padding: 2.5rem 1.5rem;
   }
@@ -472,7 +484,8 @@
 
 /* Featured Builds Section */
 .featured-builds {
-  background-color: #0f172a; /* Dark blue background */
+  background-color: #0f172a;
+  /* Dark blue background */
   color: white;
   padding: 4rem 2rem;
   text-align: center;
@@ -688,6 +701,7 @@
   .build-card.featured {
     transform: none;
   }
+
   .build-card.featured:hover {
     transform: translateY(-5px);
   }

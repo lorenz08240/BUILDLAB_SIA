@@ -127,6 +127,7 @@
   position: relative;
   gap: 8px;
 }
+
 .step-list::before {
   content: "";
   position: absolute;
@@ -274,10 +275,12 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .total-label {
   font-size: 14px;
   color: var(--muted);
 }
+
 .total-value {
   font-size: 20px;
   font-weight: 800;
@@ -439,6 +442,7 @@
   padding: 4px 8px;
   border-radius: 999px;
 }
+
 .components-grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -583,6 +587,7 @@
   overflow: hidden;
   position: relative;
 }
+
 .hero-landing-content {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -629,7 +634,8 @@
 }
 
 .btn-start-now {
-  background: linear-gradient(to bottom, #ff4d4d, #cc0000); /* Red gradient */
+  background: linear-gradient(to bottom, #ff4d4d, #cc0000);
+  /* Red gradient */
   color: white;
   padding: 20px 50px;
   font-size: 1.2rem;
@@ -640,7 +646,8 @@
   transition: all 0.3s ease;
   text-transform: uppercase;
   letter-spacing: 1px;
-  box-shadow: 0 0 20px rgba(255, 0, 0, 0.4); /* Neon red shadow */
+  box-shadow: 0 0 20px rgba(255, 0, 0, 0.4);
+  /* Neon red shadow */
 }
 
 .btn-start-now:hover {
@@ -662,6 +669,7 @@
     grid-template-columns: 1fr;
     text-align: center;
   }
+
   .hero-text-side p {
     margin-left: auto;
     margin-right: auto;

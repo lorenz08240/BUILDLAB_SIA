@@ -74,9 +74,8 @@ export default function Compatibility() {
   const hasSavedBuild = Boolean(savedBuild && savedComponents.length > 0);
   const metrics = ["CPU", "GPU", "RAM", "SSD", "PSU"];
 
-  /* ── Scoring ── */
   const getCpuScore = (cpu) => {
-    if (!cpu || !Array.isArray(cpu.tags)) return 0; // Dagdagan ng check
+    if (!cpu || !Array.isArray(cpu.tags)) return 0;
     const tag = cpu.tags.find((t) => /\d+\s*cores?/i.test(t));
     const cores = tag ? parseInt(tag.match(/(\d+)/)[1], 10) : 4;
     if (cores >= 24) return 100;
@@ -258,18 +257,6 @@ export default function Compatibility() {
 
       {/* ── Hero ── */}
       <section className="hero">
-        <div className="hero-icon-wrap" aria-hidden="true">
-          <svg
-            width="28"
-            height="28"
-            viewBox="0 0 24 24"
-            fill="none"
-            stroke="currentColor"
-            strokeWidth="2"
-          >
-            <path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z" />
-          </svg>
-        </div>
         <h1>
           Real-Time <span className="accent">Compatibility</span> Check
         </h1>
@@ -301,7 +288,6 @@ export default function Compatibility() {
             <div className="panel-card">
               <div className="panel-header">
                 <h3 className="panel-title">
-                  <span className="panel-title-icon">◈</span>
                   Your Selected Components
                 </h3>
                 <span className="parts-count">
@@ -363,7 +349,7 @@ export default function Compatibility() {
               <div className="bottleneck-card">
                 <div className="bottleneck-header">
                   <span className="bottleneck-title">
-                    ⚡ BOTTLENECK ANALYSIS
+                    BOTTLENECK ANALYSIS
                   </span>
                   <button
                     className="dismiss-btn"
@@ -380,13 +366,12 @@ export default function Compatibility() {
                         {iss.components.join(" Bottleneck Detected")} —
                       </span>
                       <p className="alert-desc">{iss.issue}</p>
-                      {iss.tip && <p className="alert-tip">💡 {iss.tip}</p>}
                     </div>
                   </div>
                 ))}
                 <div className="bottleneck-actions">
                   <Link to="/build" className="fix-btn">
-                    🔧 Fix Compatibility Issues
+                    Fix Compatibility Issues
                   </Link>
                 </div>
               </div>
@@ -407,17 +392,14 @@ export default function Compatibility() {
             <div className="features-row">
               {[
                 {
-                  icon: "⚙",
                   title: "Socket Matching",
                   desc: "Verifies that the CPU socket type matches the motherboard socket.",
                 },
                 {
-                  icon: "💾",
                   title: "RAM Compatibility",
                   desc: "Checks that RAM type and speed match the motherboard specification.",
                 },
                 {
-                  icon: "⚡",
                   title: "Power Requirements",
                   desc: "Calculates total system power draw and verifies PSU wattage.",
                 },
@@ -503,8 +485,7 @@ export default function Compatibility() {
 
             {/* Active Comparisons */}
             <div className="sidebar-card">
-              <div className="sidebar-label">ACTIVE COMPARISONS</div>
-              <div className="sidebar-title">Current vs Saved</div>
+              <div className="sidebar-title" style={{ textAlign: "center" }}>Current vs Saved</div>
 
               <div className="score-vs-row">
                 <div className="score-box">
@@ -535,9 +516,8 @@ export default function Compatibility() {
                   return (
                     <div
                       key={slot}
-                      className={`slot-card ${
-                        isSelected ? "slot-selected" : ""
-                      } ${sb ? "slot-filled" : ""}`}
+                      className={`slot-card ${isSelected ? "slot-selected" : ""
+                        } ${sb ? "slot-filled" : ""}`}
                     >
                       <div className="slot-top-row">
                         <span className="slot-name">BUILD {slot + 1}</span>
@@ -547,55 +527,33 @@ export default function Compatibility() {
                           <span className="slot-empty">Empty</span>
                         )}
                       </div>
-                      {sb && (
-                        <div className="slot-price">
-                          Total: ₱{price.toLocaleString()}
-                        </div>
-                      )}
+                      <div className="slot-price">
+                        Total: ₱{sb ? price.toLocaleString() : "0"}
+                      </div>
                       <div className="slot-btn-row">
-                        {!sb ? (
-                          <Link
-                            to="/build"
-                            className="save-slot-btn save-slot-btn--save"
-                            style={{
-                              ...saveSlotBtnStyle,
-                              margin: 0,
-                              textAlign: "center",
-                            }}
-                            onClick={() => {
-                              setSelectedSaveSlot(slot);
-                              resetBuild();
-                            }}
-                          >
-                            + Build Another PC
-                          </Link>
-                        ) : (
-                          <>
-                            <button
-                              className="save-slot-btn save-slot-btn--save"
-                              style={saveSlotBtnStyle}
-                              onClick={() => handleSave(slot)}
-                            >
-                              Save Current
-                            </button>
-                            <Link
-                              to="/build"
-                              className="save-slot-btn save-slot-btn--compare"
-                              style={{
-                                ...saveSlotBtnStyle,
-                                display: "block",
-                                textAlign: "center",
-                                boxSizing: "border-box",
-                              }}
-                              onClick={() => {
-                                setSelectedSaveSlot(slot);
-                                resetBuild();
-                              }}
-                            >
-                              BUILD NEW PC
-                            </Link>
-                          </>
-                        )}
+                        <button
+                          className="save-slot-btn save-slot-btn--save"
+                          style={saveSlotBtnStyle}
+                          onClick={() => handleSave(slot)}
+                        >
+                          Save Current
+                        </button>
+                        <Link
+                          to="/build"
+                          className="save-slot-btn save-slot-btn--compare"
+                          style={{
+                            ...saveSlotBtnStyle,
+                            display: "block",
+                            textAlign: "center",
+                            boxSizing: "border-box",
+                          }}
+                          onClick={() => {
+                            setSelectedSaveSlot(slot);
+                            resetBuild();
+                          }}
+                        >
+                          BUILD NEW PC
+                        </Link>
                       </div>
                     </div>
                   );
@@ -610,7 +568,7 @@ export default function Compatibility() {
                   </div>
                   <div className="diff-grid">
                     <div className="diff-col">
-                      <div className="diff-head">Slot 1</div>
+                      <div className="diff-head">Build 1</div>
                       {Object.entries(getSavedBuild(0))
                         .filter(([, v]) => v)
                         .map(([cat, comp], i) => (
@@ -620,7 +578,7 @@ export default function Compatibility() {
                         ))}
                     </div>
                     <div className="diff-col">
-                      <div className="diff-head">Slot 2</div>
+                      <div className="diff-head">Build 2</div>
                       {Object.entries(getSavedBuild(1))
                         .filter(([, v]) => v)
                         .map(([cat, comp], i) => (

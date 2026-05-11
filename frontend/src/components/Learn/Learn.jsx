@@ -347,7 +347,7 @@ export default function Learn() {
           <Link to="/build" className="cta-button-neon">
             Go to Build
           </Link>
-          <Link to="/brands" className="cta-button-neon" style={{ background: 'linear-gradient(90deg, #8b5cf6, #3b82f6)', boxShadow: '0 0 20px rgba(139, 92, 246, 0.4)' }}>
+          <Link to="/brands" className="cta-button-neon">
             Explore All Brands
           </Link>
         </div>

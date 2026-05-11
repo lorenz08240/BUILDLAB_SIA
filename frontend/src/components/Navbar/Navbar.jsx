@@ -1,8 +1,7 @@
-// frontend/src/components/Navbar/Navbar.jsx
 import React from "react";
-import { Link } from "react-router-dom"; // 1. I-import ang Link
+import { Link } from "react-router-dom";
 import { useBuild } from "../../contexts/BuildContext";
-import "./Navbar.css"; // Import the CSS file
+import "./Navbar.css";
 
 function Navbar() {
   const { resetBuild } = useBuild();
@@ -26,6 +25,9 @@ function Navbar() {
           <Link to="/learn" className="navbar-link">
             Learn
           </Link>
+          <button onClick={resetBuild} className="navbar-reset">
+            Reset Build
+          </button>
         </div>
       </div>
     </nav>

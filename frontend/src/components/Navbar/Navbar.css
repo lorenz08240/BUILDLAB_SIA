@@ -1,7 +1,8 @@
-/* Navbar container */
 .navbar {
-  background: rgba(0, 0, 0, 0.15); /* 15% transparent black */
-  backdrop-filter: blur(25px); /* Strong blur */
+  background: rgba(0, 0, 0, 0.15);
+  /* 15% transparent black */
+  backdrop-filter: blur(25px);
+  /* Strong blur */
   color: white;
   padding: 1.25rem 2rem;
   position: fixed;
@@ -25,16 +26,15 @@
   width: 100%;
 }
 
-/* Navbar logo */
 .navbar-logo {
   font-size: 1.75rem;
   font-weight: 800;
   letter-spacing: 2px;
-  color: #facc15; /* Yellow color */
+  color: #facc15;
+  /* Yellow color */
   text-decoration: none;
 }
 
-/* Navbar links */
 .navbar-links {
   display: flex;
   align-items: center;
@@ -52,16 +52,19 @@
 }
 
 .navbar-link:hover {
-  color: #facc15; /* Yellow color on hover */
+  color: #facc15;
+  /* Yellow color on hover */
 }
 
 /* Reset button */
 .navbar-reset {
-  background-color: #facc15; /* Yellow background */
+  background-color: #facc15;
+  /* Yellow background */
   color: #000;
   padding: 0.6rem 1.5rem;
   border: none;
-  border-radius: 999px; /* Rounded pill shape */
+  border-radius: 999px;
+  /* Rounded pill shape */
   font-weight: 800;
   font-size: 0.9rem;
   cursor: pointer;
@@ -69,7 +72,8 @@
 }
 
 .navbar-reset:hover {
-  background-color: #eab308; /* Darker yellow on hover */
+  background-color: #eab308;
+  /* Darker yellow on hover */
   transform: translateY(-2px);
   box-shadow: 0 4px 12px rgba(250, 204, 21, 0.3);
 }

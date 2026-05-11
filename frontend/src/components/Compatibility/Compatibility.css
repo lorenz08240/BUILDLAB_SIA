@@ -1,7 +1,5 @@
-/* ── Google Fonts ── */
 @import url("https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Inter:wght@300;400;500;600&display=swap");
 
-/* ── Reset ── */
 *,
 *::before,
 *::after {
@@ -59,10 +57,8 @@
   inset: 0;
   pointer-events: none;
   z-index: 0;
-  background-image: linear-gradient(
-      rgba(0, 229, 160, 0.025) 1px,
-      transparent 1px
-    ),
+  background-image: linear-gradient(rgba(0, 229, 160, 0.025) 1px,
+      transparent 1px),
     linear-gradient(90deg, rgba(0, 229, 160, 0.025) 1px, transparent 1px);
   background-size: 40px 40px;
 }
@@ -76,6 +72,7 @@
   filter: blur(120px);
   opacity: 0.18;
 }
+
 .bg-glow-1 {
   width: 600px;
   height: 600px;
@@ -83,6 +80,7 @@
   top: -200px;
   right: -100px;
 }
+
 .bg-glow-2 {
   width: 500px;
   height: 500px;
@@ -92,7 +90,7 @@
 }
 
 /* All direct children above bg */
-.compat-page > *:not(.bg-grid):not(.bg-glow) {
+.compat-page>*:not(.bg-grid):not(.bg-glow) {
   position: relative;
   z-index: 1;
 }
@@ -103,30 +101,6 @@
   padding: 52px 20px 36px;
   position: relative;
   margin-top: 50px;
-}
-
-.hero-icon-wrap {
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  width: 52px;
-  height: 52px;
-  border-radius: 50%;
-  background: var(--green-glow);
-  border: 1px solid var(--green-border-bright);
-  color: var(--green);
-  margin-bottom: 16px;
-  animation: pulse-ring 2.4s ease-in-out infinite;
-}
-
-@keyframes pulse-ring {
-  0%,
-  100% {
-    box-shadow: 0 0 0 0 rgba(0, 229, 160, 0);
-  }
-  50% {
-    box-shadow: 0 0 0 8px rgba(0, 229, 160, 0.08);
-  }
 }
 
 .hero h1 {
@@ -174,12 +148,14 @@
   display: block;
   margin-bottom: 16px;
 }
+
 .empty-card h3 {
   font-family: var(--font-display);
   font-size: 20px;
   font-weight: 600;
   margin-bottom: 10px;
 }
+
 .empty-card p {
   color: var(--text-secondary);
   font-size: 14px;
@@ -205,6 +181,7 @@
   cursor: pointer;
   transition: background 0.18s, transform 0.12s;
 }
+
 .btn-primary:hover {
   background: var(--green-dim);
   transform: translateY(-1px);
@@ -227,6 +204,7 @@
   cursor: pointer;
   transition: background 0.18s;
 }
+
 .btn-outline:hover {
   background: var(--green-glow);
 }
@@ -234,8 +212,10 @@
 /* ── Main layout ── */
 .main-layout {
   display: grid;
-  grid-template-columns: 2fr 1.2fr; /* Adjusted: Left panel takes 2 parts, right panel takes 1.2 parts */
-  gap: 24px; /* Space between the panels */
+  grid-template-columns: 2fr 1.2fr;
+  /* Adjusted: Left panel takes 2 parts, right panel takes 1.2 parts */
+  gap: 24px;
+  /* Space between the panels */
   max-width: 1720px;
   margin: 0 auto;
   padding: 28px 20px 0;
@@ -257,6 +237,7 @@
   padding: 22px;
   transition: border-color 0.2s;
 }
+
 .panel-card:hover {
   border-color: var(--border-mid);
 }
@@ -310,6 +291,7 @@
   padding: 14px 16px;
   transition: border-color 0.18s, background 0.18s;
 }
+
 .comp-item:hover {
   border-color: var(--green-border);
   background: var(--bg-raised);
@@ -482,6 +464,7 @@
   border-radius: 4px;
   transition: color 0.15s;
 }
+
 .dismiss-btn:hover {
   color: var(--text-secondary);
 }
@@ -535,6 +518,7 @@
   border: none;
   transition: background 0.18s;
 }
+
 .fix-btn:hover {
   background: var(--green-dim);
 }
@@ -570,6 +554,7 @@
   color: var(--text-secondary);
   line-height: 1.5;
 }
+
 .success-card .btn-outline {
   margin-left: auto;
   white-space: nowrap;
@@ -589,6 +574,7 @@
   padding: 18px 16px;
   transition: border-color 0.2s, background 0.2s;
 }
+
 .feature-card:hover {
   border-color: var(--green-border);
   background: var(--bg-raised);
@@ -622,8 +608,10 @@
   gap: 20px;
   position: sticky;
   top: 80px;
-  padding-left: 20px; /* Add padding to the left */
+  padding-left: 20px;
+  /* Add padding to the left */
 }
+
 .sidebar-card {
   background: var(--bg-card);
   border: 1px solid var(--border-dim);
@@ -632,6 +620,7 @@
   padding: 28px;
   transition: border-color 0.2s;
 }
+
 .sidebar-card:hover {
   border-color: var(--border-mid);
 }
@@ -737,16 +726,17 @@
   border-radius: 50%;
   flex-shrink: 0;
 }
+
 .dot-current {
   background: var(--green);
   box-shadow: 0 0 6px var(--green);
 }
+
 .dot-saved {
   background: var(--amber);
   box-shadow: 0 0 6px var(--amber);
 }
 
-/* ── Score vs row ── */
 .score-vs-row {
   display: flex;
   align-items: center;
@@ -768,7 +758,7 @@
   font-family: var(--font-display);
   font-weight: 600;
   letter-spacing: 0.06em;
-  color: var(--text-muted);
+  color: white;
   margin-bottom: 6px;
   text-transform: uppercase;
 }
@@ -788,7 +778,7 @@
 
 .score-sub {
   font-size: 10px;
-  color: var(--text-muted);
+  color: white;
   margin-top: 4px;
   font-family: var(--font-display);
   letter-spacing: 0.06em;
@@ -796,7 +786,7 @@
 }
 
 .score-vs {
-  color: var(--text-muted);
+  color: white;
   font-size: 11px;
   font-weight: 600;
   font-family: var(--font-display);
@@ -823,10 +813,12 @@
 .slot-card.slot-filled {
   cursor: pointer;
 }
+
 .slot-card.slot-filled:hover {
   border-color: var(--green-border);
   background: var(--bg-raised);
 }
+
 .slot-card.slot-selected {
   border-color: var(--green-border-bright);
   background: var(--green-glow);
@@ -867,6 +859,7 @@
   align-items: center;
   gap: 8px;
 }
+
 .slot-parts {
   font-size: 15px;
   color: var(--text-muted);
@@ -909,6 +902,7 @@
   background: var(--green);
   color: #060d18;
 }
+
 .save-slot-btn--save:hover {
   background: var(--green-dim);
 }
@@ -919,6 +913,7 @@
   color: var(--green);
   border: 1px solid var(--green-border-bright);
 }
+
 .save-slot-btn--compare:hover {
   background: var(--green-glow);
 }
@@ -953,9 +948,11 @@
   margin-bottom: 12px;
   transition: background 0.18s;
 }
+
 .compare-toggle:hover {
   background: var(--green-dim);
 }
+
 .compare-toggle.full-width {
   margin-bottom: 0;
 }
@@ -963,21 +960,31 @@
 /* ── Compare diff ── */
 /* Compare diff card */
 .compare-diff {
-  background: var(--bg-card); /* Match the card background */
-  border: 1px solid var(--border-dim); /* Add a border to the card */
-  border-radius: var(--r-xl); /* Rounded corners */
-  padding: 20px; /* Add padding inside the card */
-  margin-top: 16px; /* Add spacing above the card */
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); /* Optional shadow for better visibility */
-  overflow: hidden; /* Ensure content stays inside the card */
+  background: var(--bg-card);
+  /* Match the card background */
+  border: 1px solid var(--border-dim);
+  /* Add a border to the card */
+  border-radius: var(--r-xl);
+  /* Rounded corners */
+  padding: 20px;
+  /* Add padding inside the card */
+  margin-top: 16px;
+  /* Add spacing above the card */
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+  /* Optional shadow for better visibility */
+  overflow: hidden;
+  /* Ensure content stays inside the card */
 }
 
 /* Diff grid inside the card */
 .diff-grid {
   display: grid;
-  grid-template-columns: 1fr 1fr; /* Two columns for comparison */
-  gap: 12px; /* Space between columns */
-  margin-top: 16px; /* Add spacing above the grid */
+  grid-template-columns: 1fr 1fr;
+  /* Two columns for comparison */
+  gap: 12px;
+  /* Space between columns */
+  margin-top: 16px;
+  /* Add spacing above the grid */
 }
 
 .diff-col {
@@ -990,7 +997,7 @@
   font-size: 15px;
   font-family: var(--font-display);
   font-weight: 700;
-  color: var(--text-muted);
+  color: #ffffff;
   text-transform: uppercase;
   letter-spacing: 0.07em;
   margin-bottom: 8px;
@@ -1087,11 +1094,15 @@
 /* ── Responsive ── */
 @media (max-width: 860px) {
   .main-layout {
-    grid-template-columns: 1fr; /* Stack panels vertically */
+    grid-template-columns: 1fr;
+    /* Stack panels vertically */
   }
+
   .right-panel {
-    position: static; /* Remove sticky positioning */
-    padding-left: 0; /* Remove left padding */
+    position: static;
+    /* Remove sticky positioning */
+    padding-left: 0;
+    /* Remove left padding */
   }
 }
 
@@ -1099,13 +1110,16 @@
   .hero h1 {
     font-size: 22px;
   }
+
   .features-row {
     grid-template-columns: 1fr;
   }
+
   .success-card {
     flex-direction: column;
     align-items: flex-start;
   }
+
   .success-card .btn-outline {
     margin-left: 0;
   }
