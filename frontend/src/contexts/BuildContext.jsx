@@ -1,9 +1,17 @@
+<<<<<<< HEAD
 import React, { createContext, useContext, useEffect, useState } from 'react';
+=======
+import React, { createContext, useContext, useEffect, useState } from "react";
+>>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
 
 // Build Context for managing selected components
 const BuildContext = createContext();
 
+<<<<<<< HEAD
 const STORAGE_KEY = 'buildLabSavedBuilds';
+=======
+const STORAGE_KEY = "buildLabSavedBuilds";
+>>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
 
 // Build Provider component
 export const BuildProvider = ({ children }) => {
@@ -14,7 +22,7 @@ export const BuildProvider = ({ children }) => {
     storage: null,
     gpu: null,
     psu: null,
-    case: null
+    case: null,
   });
 
   const [compatibilityResults, setCompatibilityResults] = useState([]);
@@ -30,17 +38,17 @@ export const BuildProvider = ({ children }) => {
 
   // Function to add a component to the build
   const addComponent = (category, component) => {
-    setCurrentBuild(prev => ({
+    setCurrentBuild((prev) => ({
       ...prev,
-      [category]: component
+      [category]: component,
     }));
   };
 
   // Function to remove a component from the build
   const removeComponent = (category) => {
-    setCurrentBuild(prev => ({
+    setCurrentBuild((prev) => ({
       ...prev,
-      [category]: null
+      [category]: null,
     }));
   };
 
@@ -53,7 +61,7 @@ export const BuildProvider = ({ children }) => {
       storage: null,
       gpu: null,
       psu: null,
-      case: null
+      case: null,
     });
     setCompatibilityResults([]);
   };
@@ -67,7 +75,11 @@ export const BuildProvider = ({ children }) => {
   }, [savedBuilds]);
 
   const saveBuildSnapshot = (slotIndex = selectedSaveSlot) => {
+<<<<<<< HEAD
     setSavedBuilds(prev => {
+=======
+    setSavedBuilds((prev) => {
+>>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
       const newBuilds = [...prev];
       newBuilds[slotIndex] = currentBuild;
       return newBuilds;
@@ -84,11 +96,12 @@ export const BuildProvider = ({ children }) => {
       .filter(([key, value]) => value !== null)
       .map(([category, component]) => ({
         category,
-        ...component
+        ...component,
       }));
   };
 
   return (
+<<<<<<< HEAD
     <BuildContext.Provider value={{
       currentBuild,
       compatibilityResults,
@@ -103,6 +116,24 @@ export const BuildProvider = ({ children }) => {
       getSavedBuild,
       setCompatibilityResults
     }}>
+=======
+    <BuildContext.Provider
+      value={{
+        currentBuild,
+        compatibilityResults,
+        savedBuilds,
+        selectedSaveSlot,
+        setSelectedSaveSlot,
+        addComponent,
+        removeComponent,
+        resetBuild,
+        getSelectedComponents,
+        saveBuildSnapshot,
+        getSavedBuild,
+        setCompatibilityResults,
+      }}
+    >
+>>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
       {children}
     </BuildContext.Provider>
   );
@@ -112,7 +143,7 @@ export const BuildProvider = ({ children }) => {
 export const useBuild = () => {
   const context = useContext(BuildContext);
   if (!context) {
-    throw new Error('useBuild must be used within a BuildProvider');
+    throw new Error("useBuild must be used within a BuildProvider");
   }
   return context;
 };

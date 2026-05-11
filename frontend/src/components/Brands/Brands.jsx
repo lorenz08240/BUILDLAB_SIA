@@ -50,4 +50,8 @@ function Brands() {
   );
 }
 
+<<<<<<< HEAD
 export default Brands;
+=======
+export default Brands;
+>>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
