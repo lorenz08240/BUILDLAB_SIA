@@ -35,10 +35,6 @@
   margin: 16px 0;
   background: linear-gradient(180deg, #fff 0%, #94a3b8 100%);
   -webkit-background-clip: text;
-<<<<<<< HEAD
-=======
-  background-clip: text;
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
   -webkit-text-fill-color: transparent;
 }
 
@@ -543,20 +539,12 @@
   color: #334155;
 }
 
-<<<<<<< HEAD
 /* ── Theme Button ── */
-=======
-/* ── Neon Gradient Button ── */
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
 .cta-button-neon {
   display: inline-block;
   margin-top: 40px;
   padding: 16px 40px;
-<<<<<<< HEAD
   background: #facc15;
-=======
-  background: linear-gradient(90deg, #10b981, #38bdf8);
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
   color: #0f172a;
   font-weight: 800;
   text-transform: uppercase;
@@ -564,20 +552,12 @@
   border-radius: 12px;
   text-decoration: none;
   transition: 0.3s;
-<<<<<<< HEAD
   box-shadow: 0 0 20px rgba(250, 204, 21, 0.4);
-=======
-  box-shadow: 0 0 20px rgba(16, 185, 129, 0.4);
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
 }
 
 .cta-button-neon:hover {
   transform: scale(1.05);
-<<<<<<< HEAD
   box-shadow: 0 0 30px rgba(250, 204, 21, 0.6);
-=======
-  box-shadow: 0 0 30px rgba(16, 185, 129, 0.6);
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
 }
 
 @media (max-width: 980px) {

@@ -1,172 +1,101 @@
 // BuildLab Compatibility Rules Engine
-<<<<<<< HEAD
 export const checkCompatibility = (currentBuild, nextPart) => {
-    // 1. CPU vs Motherboard (Socket Match)
-    if (currentBuild.cpu && nextPart.category === 'motherboard') {
-        if (currentBuild.cpu.socket_type !== nextPart.socket_type) {
-            return {
-                compatible: false,
-                reason: `Socket Mismatch! Your CPU uses ${currentBuild.cpu.socket_type}, but the selected motherboard uses ${nextPart.socket_type}.`,
-                tip: "Make sure the motherboard and CPU share the same socket type so they are compatible."
-            };
-        }
-    }
-
-    // 2. Motherboard vs CPU (Reverse check)
-    if (currentBuild.motherboard && nextPart.category === 'cpu') {
-        if (currentBuild.motherboard.socket_type !== nextPart.socket_type) {
-            return {
-                compatible: false,
-                reason: `Socket Mismatch! Your motherboard uses ${currentBuild.motherboard.socket_type}, but the selected CPU uses ${nextPart.socket_type}.`,
-                tip: "Make sure the motherboard and CPU share the same socket type so they are compatible."
-            };
-        }
-    }
-
-    // 3. RAM vs Motherboard (DDR Type)
-    if (currentBuild.ram && nextPart.category === 'motherboard') {
-        if (currentBuild.ram.ddr_type !== nextPart.ddr_type) {
-            return {
-                compatible: false,
-                reason: `RAM Type Mismatch! Your RAM is ${currentBuild.ram.ddr_type}, but the motherboard supports ${nextPart.ddr_type}.`,
-                tip: "Make sure the RAM type is compatible with the motherboard (DDR4 or DDR5)."
-            };
-        }
-    }
-
-    // 4. Motherboard vs RAM (Reverse check)
-    if (currentBuild.motherboard && nextPart.category === 'ram') {
-        if (currentBuild.motherboard.ddr_type !== nextPart.ddr_type) {
-            return {
-                compatible: false,
-                reason: `RAM Type Mismatch! Your motherboard supports ${currentBuild.motherboard.ddr_type}, but the selected RAM is ${nextPart.ddr_type}.`,
-                tip: "Make sure the RAM type is compatible with the motherboard (DDR4 or DDR5)."
-            };
-        }
-    }
-
-    // 5. GPU Power Requirements vs PSU
-    if (currentBuild.gpu && nextPart.category === 'psu') {
-        if (nextPart.wattage < currentBuild.gpu.power_required) {
-            return {
-                compatible: false,
-                reason: `Insufficient Power! Your GPU requires ${currentBuild.gpu.power_required}W, but the selected PSU only provides ${nextPart.wattage}W.`,
-                tip: "Choose a PSU with a higher wattage than the total power requirements of your system."
-            };
-        }
-=======
-
-// UI Alert styles for incompatibility warnings
-const alertBoxStyles = `
-.alert-box {
-  background: rgba(239, 68, 68, 0.15); /* Mas matingkad na red */
-  border: 2px solid #ef4444; /* Mas makapal na border */
-  padding: 24px;
-  border-radius: 20px;
-  margin-bottom: 30px;
-  animation: pulse 2s infinite; /* Pulsating effect para pansinin */
-}
-
-@keyframes pulse {
-  0% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0.4); }
-  70% { box-shadow: 0 0 0 10px rgba(239, 68, 68, 0); }
-  100% { box-shadow: 0 0 0 0 rgba(239, 68, 68, 0); }
-}
-`;
-
-export const checkCompatibility = (
-  currentBuild,
-  nextPart,
-  allComponents = {}
-) => {
   // 1. CPU vs Motherboard (Socket Match)
-  if (currentBuild.cpu && nextPart.category === "motherboard") {
+  if (currentBuild.cpu && nextPart.category === 'motherboard') {
     if (currentBuild.cpu.socket_type !== nextPart.socket_type) {
-      // Kumuha ng tamang motherboard mula sa listahan
-      const available = (allComponents.motherboard || []).filter(
-        (m) => m.socket_type === currentBuild.cpu.socket_type
-      );
-      const suggestion =
-        available.length > 0
-          ? `Try the ${available[0].name} or ${
-              available[1]?.name || "other models"
-            }.`
-          : "Check our motherboard list for models matching the socket.";
-
       return {
         compatible: false,
-        reason: `Socket Mismatch! CPU is ${currentBuild.cpu.socket_type}, Motherboard is ${nextPart.socket_type}.`,
-        tip: suggestion,
+        reason: `Socket Mismatch! Your CPU uses ${currentBuild.cpu.socket_type}, but the selected motherboard uses ${nextPart.socket_type}.`,
+        tip: "Make sure the motherboard and CPU share the same socket type so they are compatible."
       };
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
     }
   }
 
-<<<<<<< HEAD
-    // 6. PSU vs GPU (Reverse check)
-    if (currentBuild.psu && nextPart.category === 'gpu') {
-        if (currentBuild.psu.wattage < nextPart.power_required) {
-            return {
-                compatible: false,
-                reason: `Insufficient Power! This GPU requires ${nextPart.power_required}W, but your PSU only provides ${currentBuild.psu.wattage}W.`,
-                tip: "Choose a PSU with a higher wattage than the total power requirements of your system."
-            };
-        }
-=======
-  // 2. RAM vs Motherboard (DDR Type)
-  if (currentBuild.motherboard && nextPart.category === "ram") {
+  // 2. Motherboard vs CPU (Reverse check)
+  if (currentBuild.motherboard && nextPart.category === 'cpu') {
+    if (currentBuild.motherboard.socket_type !== nextPart.socket_type) {
+      return {
+        compatible: false,
+        reason: `Socket Mismatch! Your motherboard uses ${currentBuild.motherboard.socket_type}, but the selected CPU uses ${nextPart.socket_type}.`,
+        tip: "Make sure the motherboard and CPU share the same socket type so they are compatible."
+      };
+    }
+  }
+
+  // 3. RAM vs Motherboard (DDR Type)
+  if (currentBuild.ram && nextPart.category === 'motherboard') {
+    if (currentBuild.ram.ddr_type !== nextPart.ddr_type) {
+      return {
+        compatible: false,
+        reason: `RAM Type Mismatch! Your RAM is ${currentBuild.ram.ddr_type}, but the motherboard supports ${nextPart.ddr_type}.`,
+        tip: "Make sure the RAM type is compatible with the motherboard (DDR4 or DDR5)."
+      };
+    }
+  }
+
+  // 4. Motherboard vs RAM (Reverse check)
+  if (currentBuild.motherboard && nextPart.category === 'ram') {
     if (currentBuild.motherboard.ddr_type !== nextPart.ddr_type) {
       return {
         compatible: false,
-        reason: `Memory Type Mismatch! Your motherboard only supports ${currentBuild.motherboard.ddr_type}, but you selected ${nextPart.ddr_type} RAM.`,
-        tip: `DDR4 and DDR5 slots are not interchangeable. Please choose ${currentBuild.motherboard.ddr_type} RAM.`,
+        reason: `RAM Type Mismatch! Your motherboard supports ${currentBuild.motherboard.ddr_type}, but the selected RAM is ${nextPart.ddr_type}.`,
+        tip: "Make sure the RAM type is compatible with the motherboard (DDR4 or DDR5)."
       };
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
     }
   }
 
-<<<<<<< HEAD
-    // 7. Case Form Factor Compatibility (Basic check)
-    if (currentBuild.case && nextPart.category === 'motherboard') {
-        // This is a simplified check - in reality, cases support multiple form factors
-        const supportedFormFactors = ['ATX', 'mATX', 'Mini-ITX'];
-        if (!supportedFormFactors.includes(nextPart.form_factor || 'ATX')) {
-            return {
-                compatible: false,
-                reason: `Form Factor Issue! Your case may not support the ${nextPart.form_factor || 'ATX'} motherboard form factor.`,
-                tip: "Check the case specifications for supported motherboard form factors."
-            };
-        }
-=======
-  // 3. Case vs Motherboard (Form Factor)
-  if (currentBuild.case && nextPart.category === "motherboard") {
-    const caseSize =
-      currentBuild.case.tags.find((t) => ["ATX", "mATX", "ITX"].includes(t)) ||
-      "ATX";
-    if (caseSize === "ITX" && nextPart.tags.includes("ATX")) {
+  // 5. GPU Power Requirements vs PSU
+  if (currentBuild.gpu && nextPart.category === 'psu') {
+    if (nextPart.wattage < currentBuild.gpu.power_required) {
       return {
         compatible: false,
-        reason: `Size Mismatch! Your case is Mini-ITX only; this ATX motherboard is too large to fit.`,
-        tip: `Please choose a compact 'mATX' or 'ITX' motherboard.`,
-      };
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
-    }
-  }
-
-  // 4. GPU Power Requirements vs PSU
-  if (currentBuild.gpu && nextPart.category === "psu") {
-    const recommendedWattage = (currentBuild.gpu.power_required || 200) + 250;
-    if (nextPart.wattage < recommendedWattage) {
-      return {
-        compatible: false,
-        reason: `Insufficient Power! Your system requires ~${recommendedWattage}W for stability, but this PSU provides only ${nextPart.wattage}W.`,
-        tip: `We recommend upgrading to a 750W or 850W power supply for better system stability.`,
+        reason: `Insufficient Power! Your GPU requires ${currentBuild.gpu.power_required}W, but the selected PSU only provides ${nextPart.wattage}W.`,
+        tip: "Choose a PSU with a higher wattage than the total power requirements of your system."
       };
     }
   }
+}
 
-  return { compatible: true, message: "Compatible! Great selection." };
-};
+// 6. PSU vs GPU (Reverse check)
+if (currentBuild.psu && nextPart.category === 'gpu') {
+  if (currentBuild.psu.wattage < nextPart.power_required) {
+    return {
+      compatible: false,
+      reason: `Insufficient Power! This GPU requires ${nextPart.power_required}W, but your PSU only provides ${currentBuild.psu.wattage}W.`,
+      tip: "Choose a PSU with a higher wattage than the total power requirements of your system."
+    };
+  }
+}
+
+
+// 7. Case Form Factor Compatibility (Basic check)
+if (currentBuild.case && nextPart.category === 'motherboard') {
+  // This is a simplified check - in reality, cases support multiple form factors
+  const supportedFormFactors = ['ATX', 'mATX', 'Mini-ITX'];
+  if (!supportedFormFactors.includes(nextPart.form_factor || 'ATX')) {
+    return {
+      compatible: false,
+      reason: `Form Factor Issue! Your case may not support the ${nextPart.form_factor || 'ATX'} motherboard form factor.`,
+      tip: "Check the case specifications for supported motherboard form factors."
+    };
+  }
+}
+
+
+// 4. GPU Power Requirements vs PSU
+if (currentBuild.gpu && nextPart.category === "psu") {
+  const recommendedWattage = (currentBuild.gpu.power_required || 200) + 250;
+  if (nextPart.wattage < recommendedWattage) {
+    return {
+      compatible: false,
+      reason: `Insufficient Power! Your system requires ~${recommendedWattage}W for stability, but this PSU provides only ${nextPart.wattage}W.`,
+      tip: `We recommend upgrading to a 750W or 850W power supply for better system stability.`,
+    };
+  }
+}
+
+return { compatible: true, message: "Compatible! Great selection." };
+
 // Calculate total system power requirements
 export const calculatePowerRequirements = (build) => {
   let totalWatts = 0;

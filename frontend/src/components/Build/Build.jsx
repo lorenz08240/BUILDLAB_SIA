@@ -534,11 +534,7 @@ function Build() {
     const tagsMatch = Array.isArray(component.tags)
       ? component.tags.some((tag) => tag.toLowerCase().includes(searchLower))
       : typeof component.tags === "string" &&
-<<<<<<< HEAD
       component.tags.toLowerCase().includes(searchLower);
-=======
-        component.tags.toLowerCase().includes(searchLower);
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
     return (
       component.name.toLowerCase().includes(searchLower) ||
       component.brand.toLowerCase().includes(searchLower) ||
@@ -584,17 +580,9 @@ function Build() {
               {buildSteps.map((step, index) => (
                 <div
                   key={step.key}
-<<<<<<< HEAD
                   className={`step-item ${index === currentStep ? "active" : ""
                     } ${currentBuild[step.key] ? "completed" : ""} ${isStepLocked(index) ? "locked" : ""
                     }`}
-=======
-                  className={`step-item ${
-                    index === currentStep ? "active" : ""
-                  } ${currentBuild[step.key] ? "completed" : ""} ${
-                    isStepLocked(index) ? "locked" : ""
-                  }`}
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
                   onClick={() => !isStepLocked(index) && setCurrentStep(index)}
                 >
                   <div className="step-icon">
@@ -648,12 +636,6 @@ function Build() {
             <Link to="/compatibility" className="btn-outline">
               Check Compatibility
             </Link>
-<<<<<<< HEAD
-=======
-            <Link to="/3d" className="btn-3d">
-              Launch 3D Builder
-            </Link>
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
           </div>
         </div>
 
@@ -693,14 +675,8 @@ function Build() {
             {filteredComponents.map((component) => (
               <div
                 key={component.id}
-<<<<<<< HEAD
                 className={`component-card ${selectedComponent?.id === component.id ? "selected" : ""
                   }`}
-=======
-                className={`component-card ${
-                  selectedComponent?.id === component.id ? "selected" : ""
-                }`}
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
                 onClick={() => handleComponentSelect(component)}
               >
                 <div className="component-image">

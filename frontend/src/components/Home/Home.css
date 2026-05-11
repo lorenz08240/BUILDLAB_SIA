@@ -1,11 +1,7 @@
 /* General styles for the hero section */
 .hero {
-<<<<<<< HEAD
-  background-color: #0d1117; /* Dark background */
-=======
   background-color: #0d1117;
   /* Dark background */
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
   color: white;
   text-align: center;
   padding: 4rem 2rem;
@@ -27,11 +23,7 @@
   z-index: 1;
 }
 
-<<<<<<< HEAD
-.hero > * {
-=======
 .hero>* {
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
   position: relative;
   z-index: 2;
 }
@@ -39,12 +31,8 @@
 /* Hero badge */
 .hero-badge {
   font-size: 0.875rem;
-<<<<<<< HEAD
-  color: #9ca3af; /* Light gray */
-=======
   color: #9ca3af;
   /* Light gray */
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
   display: inline-flex;
   align-items: center;
   margin-bottom: 1rem;
@@ -53,12 +41,8 @@
 .hero-badge .dot {
   width: 8px;
   height: 8px;
-<<<<<<< HEAD
-  background-color: #22c55e; /* Green */
-=======
   background-color: #22c55e;
   /* Green */
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
   border-radius: 50%;
   margin-right: 0.5rem;
 }
@@ -71,23 +55,15 @@
 }
 
 .hero-title .yellow {
-<<<<<<< HEAD
-  color: #facc15; /* Yellow */
-=======
   color: #facc15;
   /* Yellow */
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
 }
 
 /* Hero subtitle */
 .hero-sub {
   font-size: 1.125rem;
-<<<<<<< HEAD
-  color: #9ca3af; /* Light gray */
-=======
   color: #9ca3af;
   /* Light gray */
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
   margin-top: 1rem;
   max-width: 800px;
   margin-left: auto;
@@ -132,12 +108,8 @@
 .btn-primary,
 .btn-secondary,
 .btn-outline {
-<<<<<<< HEAD
-  background-color: #facc15; /* Yellow */
-=======
   background-color: #facc15;
   /* Yellow */
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
   color: #0f172a;
   padding: 0.75rem 1.5rem;
   border-radius: 0.5rem;
@@ -150,24 +122,16 @@
 .btn-primary:hover,
 .btn-secondary:hover,
 .btn-outline:hover {
-<<<<<<< HEAD
-  background-color: #facc15; /* Darker yellow */
-=======
   background-color: #facc15;
   /* Darker yellow */
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
 }
 
 /* Larger prominent buttons for hero section */
 .hero-main-btn {
   font-size: 1.25rem !important;
   padding: 1rem 2.5rem !important;
-<<<<<<< HEAD
-  border-radius: 9999px !important; /* Pill shape */
-=======
   border-radius: 9999px !important;
   /* Pill shape */
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
   box-shadow: 0 10px 25px -5px rgba(0, 0, 0, 0.4) !important;
   transition: transform 0.3s ease, box-shadow 0.3s ease !important;
 }
@@ -198,12 +162,8 @@
 }
 
 .feat-card {
-<<<<<<< HEAD
-  background-color: rgba(255, 255, 255, 0.05); /* Semi-transparent */
-=======
   background-color: rgba(255, 255, 255, 0.05);
   /* Semi-transparent */
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
   padding: 1.5rem;
   border-radius: 0.5rem;
   text-align: center;
@@ -215,12 +175,8 @@
 .feat-icon {
   font-size: 2rem;
   margin-bottom: 1rem;
-<<<<<<< HEAD
-  color: #facc15; /* Yellow */
-=======
   color: #facc15;
   /* Yellow */
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
 }
 
 .feat-card h4 {
@@ -238,12 +194,8 @@
 /* Hero arrow */
 .hero-arrow {
   font-size: 2rem;
-<<<<<<< HEAD
-  color: #9ca3af; /* Light gray */
-=======
   color: #9ca3af;
   /* Light gray */
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
   margin-top: 2rem;
 }
 
@@ -458,10 +410,7 @@
   .welcome-title {
     font-size: 2.5rem;
   }
-<<<<<<< HEAD
-=======
 
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
   .welcome-banner-content {
     padding: 2.5rem 1.5rem;
   }
@@ -535,12 +484,8 @@
 
 /* Featured Builds Section */
 .featured-builds {
-<<<<<<< HEAD
-  background-color: #0f172a; /* Dark blue background */
-=======
   background-color: #0f172a;
   /* Dark blue background */
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
   color: white;
   padding: 4rem 2rem;
   text-align: center;
@@ -756,10 +701,7 @@
   .build-card.featured {
     transform: none;
   }
-<<<<<<< HEAD
-=======
 
->>>>>>> b104f730eee2bbb74a30bf51f910858926679ecb
   .build-card.featured:hover {
     transform: translateY(-5px);
   }
