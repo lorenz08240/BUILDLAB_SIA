@@ -5,8 +5,8 @@ export const checkCompatibility = (currentBuild, nextPart) => {
         if (currentBuild.cpu.socket_type !== nextPart.socket_type) {
             return {
                 compatible: false,
-                reason: `Socket Mismatch! Ang CPU mo ay ${currentBuild.cpu.socket_type}, pero ang pinili mong motherboard ay ${nextPart.socket_type}.`,
-                tip: "Siguraduhin na pareho ang socket type ng Motherboard at CPU para magkasya sila."
+                reason: `Socket Mismatch! Your CPU uses ${currentBuild.cpu.socket_type}, but the selected motherboard uses ${nextPart.socket_type}.`,
+                tip: "Make sure the motherboard and CPU share the same socket type so they are compatible."
             };
         }
     }
@@ -16,8 +16,8 @@ export const checkCompatibility = (currentBuild, nextPart) => {
         if (currentBuild.motherboard.socket_type !== nextPart.socket_type) {
             return {
                 compatible: false,
-                reason: `Socket Mismatch! Ang motherboard mo ay ${currentBuild.motherboard.socket_type}, pero ang pinili mong CPU ay ${nextPart.socket_type}.`,
-                tip: "Siguraduhin na pareho ang socket type ng Motherboard at CPU para magkasya sila."
+                reason: `Socket Mismatch! Your motherboard uses ${currentBuild.motherboard.socket_type}, but the selected CPU uses ${nextPart.socket_type}.`,
+                tip: "Make sure the motherboard and CPU share the same socket type so they are compatible."
             };
         }
     }
@@ -27,8 +27,8 @@ export const checkCompatibility = (currentBuild, nextPart) => {
         if (currentBuild.ram.ddr_type !== nextPart.ddr_type) {
             return {
                 compatible: false,
-                reason: `RAM Type Mismatch! Ang RAM mo ay ${currentBuild.ram.ddr_type}, pero ang motherboard ay ${nextPart.ddr_type}.`,
-                tip: "Siguraduhin na compatible ang RAM type sa motherboard (DDR4 o DDR5)."
+                reason: `RAM Type Mismatch! Your RAM is ${currentBuild.ram.ddr_type}, but the motherboard supports ${nextPart.ddr_type}.`,
+                tip: "Make sure the RAM type is compatible with the motherboard (DDR4 or DDR5)."
             };
         }
     }
@@ -38,8 +38,8 @@ export const checkCompatibility = (currentBuild, nextPart) => {
         if (currentBuild.motherboard.ddr_type !== nextPart.ddr_type) {
             return {
                 compatible: false,
-                reason: `RAM Type Mismatch! Ang motherboard mo ay ${currentBuild.motherboard.ddr_type}, pero ang RAM ay ${nextPart.ddr_type}.`,
-                tip: "Siguraduhin na compatible ang RAM type sa motherboard (DDR4 o DDR5)."
+                reason: `RAM Type Mismatch! Your motherboard supports ${currentBuild.motherboard.ddr_type}, but the selected RAM is ${nextPart.ddr_type}.`,
+                tip: "Make sure the RAM type is compatible with the motherboard (DDR4 or DDR5)."
             };
         }
     }
@@ -49,8 +49,8 @@ export const checkCompatibility = (currentBuild, nextPart) => {
         if (nextPart.wattage < currentBuild.gpu.power_required) {
             return {
                 compatible: false,
-                reason: `Insufficient Power! Ang GPU mo ay nangangailangan ng ${currentBuild.gpu.power_required}W, pero ang PSU ay ${nextPart.wattage}W lang.`,
-                tip: "Pumili ng PSU na may mas mataas na wattage kaysa sa kabuuang power requirements ng system."
+                reason: `Insufficient Power! Your GPU requires ${currentBuild.gpu.power_required}W, but the selected PSU only provides ${nextPart.wattage}W.`,
+                tip: "Choose a PSU with a higher wattage than the total power requirements of your system."
             };
         }
     }
@@ -60,8 +60,8 @@ export const checkCompatibility = (currentBuild, nextPart) => {
         if (currentBuild.psu.wattage < nextPart.power_required) {
             return {
                 compatible: false,
-                reason: `Insufficient Power! Ang GPU na ito ay nangangailangan ng ${nextPart.power_required}W, pero ang PSU mo ay ${currentBuild.psu.wattage}W lang.`,
-                tip: "Pumili ng PSU na may mas mataas na wattage kaysa sa kabuuang power requirements ng system."
+                reason: `Insufficient Power! This GPU requires ${nextPart.power_required}W, but your PSU only provides ${currentBuild.psu.wattage}W.`,
+                tip: "Choose a PSU with a higher wattage than the total power requirements of your system."
             };
         }
     }
@@ -73,7 +73,7 @@ export const checkCompatibility = (currentBuild, nextPart) => {
         if (!supportedFormFactors.includes(nextPart.form_factor || 'ATX')) {
             return {
                 compatible: false,
-                reason: `Form Factor Issue! Ang case mo ay maaaring hindi supportahan ang ${nextPart.form_factor || 'ATX'} motherboard.`,
+                reason: `Form Factor Issue! Your case may not support the ${nextPart.form_factor || 'ATX'} motherboard form factor.`,
                 tip: "Check the case specifications for supported motherboard form factors."
             };
         }

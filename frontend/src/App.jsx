@@ -6,7 +6,7 @@ import Home from "./components/Home/Home";
 import Build from "./components/Build/Build";
 import Compatibility from "./components/Compatibility/Compatibility";
 import Learn from "./components/Learn/Learn";
-import Summary from "./components/Summary/Summary";
+import Brands from "./components/Brands/Brands";
 
 function App() {
   return (
@@ -27,8 +27,9 @@ function App() {
             {/* Learn Page */}
             <Route path="/learn" element={<Learn />} />
 
-            {/* Summary Page */}
-            <Route path="/summary" element={<Summary />} />
+            {/* Brands Page */}
+            <Route path="/brands" element={<Brands />} />
+
           </Routes>
         </div>
       </Router>
