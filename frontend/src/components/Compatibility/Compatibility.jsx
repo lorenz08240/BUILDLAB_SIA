@@ -527,55 +527,33 @@ export default function Compatibility() {
                           <span className="slot-empty">Empty</span>
                         )}
                       </div>
-                      {sb && (
-                        <div className="slot-price">
-                          Total: ₱{price.toLocaleString()}
-                        </div>
-                      )}
+                      <div className="slot-price">
+                        Total: ₱{sb ? price.toLocaleString() : "0"}
+                      </div>
                       <div className="slot-btn-row">
-                        {!sb ? (
-                          <Link
-                            to="/build"
-                            className="save-slot-btn save-slot-btn--save"
-                            style={{
-                              ...saveSlotBtnStyle,
-                              margin: 0,
-                              textAlign: "center",
-                            }}
-                            onClick={() => {
-                              setSelectedSaveSlot(slot);
-                              resetBuild();
-                            }}
-                          >
-                            + Build Another PC
-                          </Link>
-                        ) : (
-                          <>
-                            <button
-                              className="save-slot-btn save-slot-btn--save"
-                              style={saveSlotBtnStyle}
-                              onClick={() => handleSave(slot)}
-                            >
-                              Save Current
-                            </button>
-                            <Link
-                              to="/build"
-                              className="save-slot-btn save-slot-btn--compare"
-                              style={{
-                                ...saveSlotBtnStyle,
-                                display: "block",
-                                textAlign: "center",
-                                boxSizing: "border-box",
-                              }}
-                              onClick={() => {
-                                setSelectedSaveSlot(slot);
-                                resetBuild();
-                              }}
-                            >
-                              BUILD NEW PC
-                            </Link>
-                          </>
-                        )}
+                        <button
+                          className="save-slot-btn save-slot-btn--save"
+                          style={saveSlotBtnStyle}
+                          onClick={() => handleSave(slot)}
+                        >
+                          Save Current
+                        </button>
+                        <Link
+                          to="/build"
+                          className="save-slot-btn save-slot-btn--compare"
+                          style={{
+                            ...saveSlotBtnStyle,
+                            display: "block",
+                            textAlign: "center",
+                            boxSizing: "border-box",
+                          }}
+                          onClick={() => {
+                            setSelectedSaveSlot(slot);
+                            resetBuild();
+                          }}
+                        >
+                          BUILD NEW PC
+                        </Link>
                       </div>
                     </div>
                   );
