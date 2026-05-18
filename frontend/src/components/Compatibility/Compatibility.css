@@ -129,7 +129,7 @@
 .empty-wrap {
   display: flex;
   justify-content: center;
-  margin-top: 60px;
+  margin-top: 40px;
   padding: 0 20px;
 }
 
@@ -137,30 +137,53 @@
   background: var(--bg-card);
   border: 1px solid var(--border-mid);
   border-radius: var(--r-xl);
-  padding: 52px 40px;
+  padding: 40px 36px 36px;
   text-align: center;
-  max-width: 460px;
+  max-width: 480px;
   width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
 }
 
-.empty-icon {
-  font-size: 48px;
-  display: block;
-  margin-bottom: 16px;
+/* Product image area */
+.empty-img-wrap {
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 8px;
+}
+
+.empty-img {
+  width: 350px;
+  height: auto;
+  object-fit: contain;
 }
 
 .empty-card h3 {
   font-family: var(--font-display);
-  font-size: 20px;
+  font-size: 17px;
   font-weight: 600;
-  margin-bottom: 10px;
+  color: var(--text-primary);
+  margin: 0;
 }
 
 .empty-card p {
   color: var(--text-secondary);
-  font-size: 14px;
-  margin-bottom: 24px;
+  font-size: 13px;
   line-height: 1.6;
+  max-width: 280px;
+  margin: 0;
+}
+
+/* Pill-shaped CTA to match Component Picker */
+.btn-pill {
+  border-radius: 999px !important;
+  padding: 10px 28px !important;
+  font-size: 16px !important;
+  margin-top: 4px;
 }
 
 /* ── Buttons ── */
@@ -1123,4 +1146,162 @@
   .success-card .btn-outline {
     margin-left: 0;
   }
+}
+
+/* ── Slot button grid (2-col + full-width row) ── */
+.slot-btn-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 8px;
+  margin-top: 12px;
+}
+
+.slot-check-issues-btn {
+  background: rgba(245, 158, 11, 0.08) !important;
+  color: var(--amber) !important;
+  border: 1px solid var(--amber-border) !important;
+  border-radius: var(--r-sm);
+  cursor: pointer;
+  transition: background 0.18s;
+}
+
+.slot-check-issues-btn:hover {
+  background: rgba(245, 158, 11, 0.16) !important;
+}
+
+/* ── Compatibility Issues Modal ── */
+.compat-modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.72);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  padding: 20px;
+}
+
+.compat-modal {
+  background: var(--bg-card);
+  border: 1px solid var(--border-lit);
+  border-radius: var(--r-xl);
+  width: 100%;
+  max-width: 520px;
+  max-height: 80vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.6);
+  animation: modalIn 0.22s ease;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(24px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.compat-modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  border-bottom: 1px solid var(--border-dim);
+}
+
+.compat-modal-header h2 {
+  font-family: var(--font-display);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--text-primary);
+  letter-spacing: 0.03em;
+  margin: 0;
+}
+
+.compat-modal-close {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 18px;
+  cursor: pointer;
+  line-height: 1;
+  padding: 4px 8px;
+  border-radius: var(--r-sm);
+  transition: color 0.15s, background 0.15s;
+}
+
+.compat-modal-close:hover {
+  color: var(--text-primary);
+  background: var(--bg-raised);
+}
+
+.compat-modal-body {
+  overflow-y: auto;
+  padding: 20px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.compat-issue-card {
+  border-radius: var(--r-lg);
+  padding: 14px 16px;
+  border: 1px solid transparent;
+}
+
+.compat-issue-error {
+  background: var(--red-glow);
+  border-color: var(--red-border);
+}
+
+.compat-issue-warning {
+  background: var(--amber-glow);
+  border-color: var(--amber-border);
+}
+
+.compat-issue-ok {
+  background: var(--green-glow);
+  border-color: var(--green-border);
+}
+
+.compat-issue-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.compat-issue-icon {
+  font-size: 16px;
+}
+
+.compat-issue-category {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.06em;
+  color: var(--text-primary);
+}
+
+.compat-issue-message {
+  font-size: 13px;
+  color: var(--text-secondary);
+  line-height: 1.6;
+  margin: 0 0 6px;
+}
+
+.compat-issue-fix {
+  font-size: 12px;
+  color: var(--green);
+  font-style: italic;
+  line-height: 1.5;
+  margin: 0;
+}
+
+.compat-modal-footer {
+  display: flex;
+  gap: 10px;
+  padding: 16px 24px 20px;
+  border-top: 1px solid var(--border-dim);
+  justify-content: flex-end;
 }

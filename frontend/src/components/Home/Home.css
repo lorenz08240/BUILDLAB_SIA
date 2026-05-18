@@ -697,6 +697,14 @@
   color: #0f172a;
 }
 
+.final-cta-btns {
+  display: flex;
+  gap: 16px;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-top: 8px;
+}
+
 @media (max-width: 768px) {
   .build-card.featured {
     transform: none;

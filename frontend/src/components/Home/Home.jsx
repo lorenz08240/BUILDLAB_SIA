@@ -63,16 +63,6 @@ function Hero() {
           </div>
         </div>
 
-        <div className="hero-btns">
-          <Link to="/build" className="btn-primary hero-main-btn">
-            {" "}
-            Start Building Now
-          </Link>
-          <Link to="/learn" className="btn-secondary hero-main-btn">
-            {" "}
-            Explore Resources
-          </Link>
-        </div>
 
         <div className="hero-features">
           <div className="feat-card">
@@ -210,7 +200,10 @@ function Hero() {
         <div className="container">
           <h2>Ready to Build Your Dream PC?</h2>
           <p>Join thousands of users who have successfully planned their builds with BuildLab.</p>
-          <Link to="/build" className="btn-primary hero-main-btn">Start Your Build</Link>
+          <div className="final-cta-btns">
+            <Link to="/build" className="btn-primary hero-main-btn">Start Your Build</Link>
+            <Link to="/learn" className="btn-secondary hero-main-btn">Explore Resources</Link>
+          </div>
         </div>
       </section>
     </>

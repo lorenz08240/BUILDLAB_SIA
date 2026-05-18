@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Link } from "react-router-dom";
 import { useBuild } from "../../contexts/BuildContext";
 import "./Learn.css";
@@ -210,6 +210,15 @@ const componentGuide = [
 export default function Learn() {
   const { getSelectedComponents } = useBuild();
   const [selectedComponent, setSelectedComponent] = useState(componentGuide[0]);
+  const detailRef = useRef(null);
+
+  const handleComponentSelect = (component) => {
+    setSelectedComponent(component);
+    // Add a tiny delay to ensure the DOM updates before scrolling (if needed), though React usually handles it synchronously enough for this
+    setTimeout(() => {
+      detailRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+    }, 100);
+  };
 
   return (
     <div className="learn-page">
@@ -232,7 +241,7 @@ export default function Learn() {
             key={component.id}
             className={`component-card ${selectedComponent.id === component.id ? "active" : ""
               }`}
-            onClick={() => setSelectedComponent(component)}
+            onClick={() => handleComponentSelect(component)}
           >
             <div className="card-image-wrapper">
               <img
@@ -249,107 +258,125 @@ export default function Learn() {
         ))}
       </div>
 
-      {/* ── DETAIL PANEL ── */}
-      <div className="detail-panel">
-        <div className="detail-header">
-          <div className="detail-title-section">
-            <div>
+      {/* ── DETAIL PANEL WITH SPLIT LAYOUT ── */}
+      <div className="detail-panel" ref={detailRef}>
+        <div className="detail-split-layout">
+          
+          {/* LEFT SIDE: Media Frame (Ready for 3D Model) */}
+          <div className="media-frame">
+            <div className="media-container">
+              <img 
+                src={selectedComponent.image} 
+                alt={selectedComponent.name} 
+                className="big-animated-image" 
+              />
+              <div className="media-overlay-hint">
+                <span className="icon">🔄</span> 
+                3D Model Frame Available Here
+              </div>
+            </div>
+            <div className="detail-header-left">
               <h2>{selectedComponent.name}</h2>
               <p className="detail-description">
                 {selectedComponent.description}
               </p>
             </div>
           </div>
-        </div>
 
-        <div className="detail-cards-grid">
-          {/* ── SPECS TABLE ── */}
-          <div className="content-card">
-            <h3 className="section-title">Key Specifications</h3>
-            <div className="specs-grid">
-              {selectedComponent.specs.map((spec, idx) => (
-                <div key={idx} className="spec-item">
-                  <div className="spec-label">{spec.label}</div>
-                  <div className="spec-value">{spec.value}</div>
-                  <div className="spec-info">{spec.info}</div>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* ── WHY IT MATTERS ── */}
-          <div className="content-card">
-            <h3 className="section-title">Why It Matters</h3>
-            <p className="card-text">
-              {selectedComponent.whyMatters}
-            </p>
-          </div>
-
-          {/* ── PRO TIPS ── */}
-          <div className="content-card">
-            <h3 className="section-title">Pro Tips</h3>
-            <div className="tips-grid">
-              {selectedComponent.proTips.map((tip, idx) => (
-                <div key={idx} className="tip-item">
-                  <span>{tip}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* ── COMMON MISTAKES ── */}
-          <div className="content-card">
-            <h3 className="section-title">Common Mistakes</h3>
-            <div className="mistakes-grid">
-              {selectedComponent.commonMistakes.map((mistake, idx) => (
-                <div key={idx} className="mistake-item">
-                  <span>{mistake}</span>
-                </div>
-              ))}
-            </div>
-          </div>
-
-          {/* ── BEST FOR ── */}
-          <div className="content-card">
-            <h3 className="section-title">Best For</h3>
-            <div className="best-for-grid">
-              {Object.entries(selectedComponent.bestFor).map(
-                ([useCase, recommendation], idx) => (
-                  <div key={idx} className="best-for-item">
-                    <div className="use-case">{useCase}</div>
-                    <div className="recommendation">{recommendation}</div>
-                  </div>
-                )
-              )}
-            </div>
-          </div>
-
-          {/* ── BRANDS ── */}
-          <div className="content-card">
-            <h3 className="section-title">Popular Brands</h3>
-            <div className="brands-grid">
-              {selectedComponent.brands.map((brand, idx) => (
-                <div key={idx} className="brand-item">
-                  <div className="brand-header">
-                    <div>
-                      <div className="brand-name">{brand.name}</div>
-                      <div className="brand-tier">{brand.tier}</div>
+          {/* RIGHT SIDE: Information Cards */}
+          <div className="info-frame">
+            <div className="detail-cards-grid">
+              
+              {/* ── SPECS TABLE ── */}
+              <div className="content-card">
+                <h3 className="section-title">Key Specifications</h3>
+                <div className="specs-grid">
+                  {selectedComponent.specs.map((spec, idx) => (
+                    <div key={idx} className="spec-item">
+                      <div className="spec-label">{spec.label}</div>
+                      <div className="spec-value">{spec.value}</div>
+                      <div className="spec-info">{spec.info}</div>
                     </div>
-                  </div>
-                  <p className="brand-description">{brand.description}</p>
+                  ))}
                 </div>
-              ))}
+              </div>
+
+              {/* ── WHY IT MATTERS ── */}
+              <div className="content-card">
+                <h3 className="section-title">Why It Matters</h3>
+                <p className="card-text">
+                  {selectedComponent.whyMatters}
+                </p>
+              </div>
+
+              {/* ── PRO TIPS ── */}
+              <div className="content-card">
+                <h3 className="section-title">Pro Tips</h3>
+                <div className="tips-grid">
+                  {selectedComponent.proTips.map((tip, idx) => (
+                    <div key={idx} className="tip-item">
+                      <span>{tip}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* ── COMMON MISTAKES ── */}
+              <div className="content-card">
+                <h3 className="section-title">Common Mistakes</h3>
+                <div className="mistakes-grid">
+                  {selectedComponent.commonMistakes.map((mistake, idx) => (
+                    <div key={idx} className="mistake-item">
+                      <span>{mistake}</span>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              {/* ── BEST FOR ── */}
+              <div className="content-card">
+                <h3 className="section-title">Best For</h3>
+                <div className="best-for-grid">
+                  {Object.entries(selectedComponent.bestFor).map(
+                    ([useCase, recommendation], idx) => (
+                      <div key={idx} className="best-for-item">
+                        <div className="use-case">{useCase}</div>
+                        <div className="recommendation">{recommendation}</div>
+                      </div>
+                    )
+                  )}
+                </div>
+              </div>
+
+              {/* ── BRANDS ── */}
+              <div className="content-card">
+                <h3 className="section-title">Popular Brands</h3>
+                <div className="brands-grid">
+                  {selectedComponent.brands.map((brand, idx) => (
+                    <div key={idx} className="brand-item">
+                      <div className="brand-header">
+                        <div>
+                          <div className="brand-name">{brand.name}</div>
+                          <div className="brand-tier">{brand.tier}</div>
+                        </div>
+                      </div>
+                      <p className="brand-description">{brand.description}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+            </div>
+
+            {/* ── CTA ── */}
+            <div className="detail-cta" style={{ display: 'flex', gap: '20px', justifyContent: 'center', marginTop: '30px' }}>
+              <Link to="/build" className="cta-button-neon">
+                Go to Build
+              </Link>
+              <Link to="/brands" className="cta-button-neon">
+                Explore All Brands
+              </Link>
             </div>
           </div>
-        </div>
-        {/* ── CTA ── */}
-        <div className="detail-cta" style={{ display: 'flex', gap: '20px', justifyContent: 'center' }}>
-          <Link to="/build" className="cta-button-neon">
-            Go to Build
-          </Link>
-          <Link to="/brands" className="cta-button-neon">
-            Explore All Brands
-          </Link>
         </div>
       </div>
     </div>

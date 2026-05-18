@@ -1,4 +1,5 @@
 import React, { useMemo, useState } from "react";
+import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { useBuild } from "../../contexts/BuildContext";
 import { checkCompatibility } from "../../utilities/rules";
@@ -57,6 +58,7 @@ export default function Compatibility() {
   const [compareMode, setCompareMode] = useState(false);
   const [saveMessage, setSaveMessage] = useState("");
   const [bottleneckDismissed, setBottleneckDismissed] = useState(false);
+  const [issueModal, setIssueModal] = useState(null); // { slot, issues[] }
 
   const parsePrice = (price = "") =>
     parseFloat(price.toString().replace(/[₱,]/g, "")) || 0;
@@ -204,6 +206,70 @@ export default function Compatibility() {
     return issues;
   };
 
+  /* ── Check compatibility for any build object ── */
+  const checkBuildCompatibility = (build) => {
+    if (!build) return [];
+    const issues = [];
+
+    // CPU ↔ Motherboard socket
+    if (build.cpu && build.motherboard) {
+      const cpuSocket = build.cpu.socket_type;
+      const mbSocket = build.motherboard.socket_type;
+      if (cpuSocket && mbSocket && cpuSocket !== mbSocket) {
+        issues.push({
+          category: "CPU ↔ Motherboard",
+          icon: "⚙️",
+          severity: "error",
+          message: `CPU socket (${cpuSocket}) does not match motherboard socket (${mbSocket}).`,
+          fix: "Replace the CPU or motherboard so their sockets match.",
+        });
+      }
+    }
+
+    // RAM ↔ Motherboard DDR type
+    if (build.ram && build.motherboard) {
+      const ramType = build.ram.ddr_type;
+      const mbType = build.motherboard.ddr_type;
+      if (ramType && mbType && ramType !== mbType) {
+        issues.push({
+          category: "RAM ↔ Motherboard",
+          icon: "💾",
+          severity: "error",
+          message: `RAM type (${ramType}) is incompatible with motherboard (${mbType}).`,
+          fix: `Switch to ${mbType} RAM or a motherboard that supports ${ramType}.`,
+        });
+      }
+    }
+
+    // PSU wattage vs GPU requirement
+    if (build.psu && build.gpu) {
+      const psuW = build.psu.wattage || 0;
+      const gpuW = build.gpu.power_required || 0;
+      const totalNeeded = gpuW + 65 + 60; // CPU TDP estimate + system
+      if (psuW < totalNeeded) {
+        issues.push({
+          category: "PSU ↔ GPU",
+          icon: "⚡",
+          severity: "warning",
+          message: `PSU (${psuW}W) may be insufficient. Estimated system draw: ~${totalNeeded}W.`,
+          fix: `Upgrade to at least a ${Math.ceil(totalNeeded / 50) * 50}W PSU for stable operation.`,
+        });
+      }
+    }
+
+    if (issues.length === 0) {
+      issues.push({
+        category: "All Clear",
+        icon: "✅",
+        severity: "ok",
+        message: "All components are compatible with each other!",
+        fix: null,
+      });
+    }
+
+    return issues;
+  };
+
   /* ── Power estimate ── */
   const estimateWattage = (build = currentBuild) => {
     const cpu = build?.cpu;
@@ -249,6 +315,40 @@ export default function Compatibility() {
     );
 
   return (
+    <>
+      {/* ── Compatibility Issues Modal (portaled to body) ── */}
+      {issueModal && createPortal(
+        <div className="compat-modal-overlay" onClick={() => setIssueModal(null)}>
+          <div className="compat-modal" onClick={(e) => e.stopPropagation()}>
+            <div className="compat-modal-header">
+              <h2>Build {issueModal.slot + 1} — Compatibility Report</h2>
+              <button className="compat-modal-close" onClick={() => setIssueModal(null)}>✕</button>
+            </div>
+            <div className="compat-modal-body">
+              {issueModal.issues.map((issue, i) => (
+                <div key={i} className={`compat-issue-card compat-issue-${issue.severity}`}>
+                  <div className="compat-issue-header">
+                    <span className="compat-issue-icon">{issue.icon}</span>
+                    <span className="compat-issue-category">{issue.category}</span>
+                  </div>
+                  <p className="compat-issue-message">{issue.message}</p>
+                  {issue.fix && (
+                    <p className="compat-issue-fix">💡 {issue.fix}</p>
+                  )}
+                </div>
+              ))}
+            </div>
+            <div className="compat-modal-footer">
+              <Link to="/build" className="btn-primary" onClick={() => setIssueModal(null)}>
+                Go to Build Picker
+              </Link>
+              <button className="btn-outline" onClick={() => setIssueModal(null)}>Close</button>
+            </div>
+          </div>
+        </div>,
+        document.body
+      )}
+
     <div className="compat-page">
       {/* Decorative bg elements */}
       <div className="bg-grid" aria-hidden="true" />
@@ -269,11 +369,17 @@ export default function Compatibility() {
       {selectedComponents.length === 0 && (
         <div className="empty-wrap">
           <div className="empty-card">
-            <div className="empty-icon">🛡️</div>
+            <div className="empty-img-wrap">
+              <img
+                src="/public/component_picker_image_bg.png"
+                alt="PC Build"
+                className="empty-img"
+              />
+            </div>
             <h3>No Components Selected Yet</h3>
-            <p>Head to the Component Picker and start building your rig.</p>
-            <Link to="/build" className="btn-primary">
-              ⚙ Go to Component Picker
+            <p>Head to the Component Picker above and start selecting parts. Compatibility results will appear here instantly.</p>
+            <Link to="/build" className="btn-primary btn-pill">
+              Go to Component Picker
             </Link>
           </div>
         </div>
@@ -507,17 +613,18 @@ export default function Compatibility() {
               <div className="slots-list">
                 {[0, 1].map((slot) => {
                   const sb = getSavedBuild(slot);
-                  const count = sb
-                    ? Object.values(sb).filter(Boolean).length
-                    : 0;
+                  const count = sb ? Object.values(sb).filter(Boolean).length : 0;
+                  const slotIssues = checkBuildCompatibility(sb);
                   const isSelected = selectedSaveSlot === slot;
                   const price = slot === 0 ? slot1Price : slot2Price;
+
+                  const isBuild2 = slot === 1;
+                  const isBuild1Saved = Boolean(getSavedBuild(0));
 
                   return (
                     <div
                       key={slot}
-                      className={`slot-card ${isSelected ? "slot-selected" : ""
-                        } ${sb ? "slot-filled" : ""}`}
+                      className={`slot-card ${isSelected ? "slot-selected" : ""} ${sb ? "slot-filled" : ""}`}
                     >
                       <div className="slot-top-row">
                         <span className="slot-name">BUILD {slot + 1}</span>
@@ -530,31 +637,52 @@ export default function Compatibility() {
                       <div className="slot-price">
                         Total: ₱{sb ? price.toLocaleString() : "0"}
                       </div>
-                      <div className="slot-btn-row">
-                        <button
-                          className="save-slot-btn save-slot-btn--save"
-                          style={saveSlotBtnStyle}
-                          onClick={() => handleSave(slot)}
-                        >
-                          Save Current
-                        </button>
-                        <Link
-                          to="/build"
-                          className="save-slot-btn save-slot-btn--compare"
-                          style={{
-                            ...saveSlotBtnStyle,
-                            display: "block",
-                            textAlign: "center",
-                            boxSizing: "border-box",
-                          }}
-                          onClick={() => {
-                            setSelectedSaveSlot(slot);
-                            resetBuild();
-                          }}
-                        >
-                          BUILD NEW PC
-                        </Link>
-                      </div>
+                      
+                      {isBuild2 && !isBuild1Saved ? (
+                        <div style={{ marginTop: '12px', fontSize: '13px', color: 'var(--text-muted)', fontStyle: 'italic', textAlign: 'center' }}>
+                          Save Build 1 first to unlock Build 2
+                        </div>
+                      ) : (
+                        <div className="slot-btn-grid">
+                          <button
+                            className="save-slot-btn save-slot-btn--save"
+                            style={saveSlotBtnStyle}
+                            onClick={() => handleSave(slot)}
+                          >
+                            {sb ? "Overwrite" : "Save Current"}
+                          </button>
+
+                          {sb ? (
+                            <Link
+                              to="/build"
+                              className="save-slot-btn save-slot-btn--compare"
+                              style={{ ...saveSlotBtnStyle, display: "block", textAlign: "center", boxSizing: "border-box" }}
+                              onClick={() => setSelectedSaveSlot(slot)}
+                            >
+                              Edit Build
+                            </Link>
+                          ) : (
+                            <Link
+                              to="/build"
+                              className="save-slot-btn save-slot-btn--compare"
+                              style={{ ...saveSlotBtnStyle, display: "block", textAlign: "center", boxSizing: "border-box" }}
+                              onClick={() => { setSelectedSaveSlot(slot); resetBuild(); }}
+                            >
+                              {isBuild2 ? "Add New PC" : "Build New PC"}
+                            </Link>
+                          )}
+
+                          {sb && (
+                            <button
+                              className="save-slot-btn slot-check-issues-btn"
+                              style={{ ...saveSlotBtnStyle, gridColumn: '1 / -1' }}
+                              onClick={() => setIssueModal({ slot, issues: checkBuildCompatibility(sb) })}
+                            >
+                              🔍 Check Issues for Build {slot + 1}
+                            </button>
+                          )}
+                        </div>
+                      )}
                     </div>
                   );
                 })}
@@ -562,33 +690,45 @@ export default function Compatibility() {
 
               {/* Comparison Section */}
               {getSavedBuild(0) && getSavedBuild(1) && (
-                <div className="compare-diff">
-                  <div className="diff-title">
-                    Builds Comparison
-                  </div>
-                  <div className="diff-grid">
-                    <div className="diff-col">
-                      <div className="diff-head">Build 1</div>
-                      {Object.entries(getSavedBuild(0))
-                        .filter(([, v]) => v)
-                        .map(([cat, comp], i) => (
-                          <div key={i} className="diff-item">
-                            {comp.name}
-                          </div>
-                        ))}
+                <>
+                  <button 
+                    className="compare-toggle full-width"
+                    onClick={() => setCompareMode(!compareMode)}
+                    style={{ marginTop: '16px' }}
+                  >
+                    {compareMode ? "HIDE COMPARISON" : "COMPARE BUILDS"}
+                  </button>
+                  
+                  {compareMode && (
+                    <div className="compare-diff">
+                      <div className="diff-title" style={{ fontFamily: 'var(--font-display)', fontSize: '16px', fontWeight: '700', color: 'var(--text-primary)' }}>
+                        Builds Comparison
+                      </div>
+                      <div className="diff-grid">
+                        <div className="diff-col">
+                          <div className="diff-head">Build 1</div>
+                          {Object.entries(getSavedBuild(0))
+                            .filter(([, v]) => v)
+                            .map(([cat, comp], i) => (
+                              <div key={`b1-${i}`} className="diff-item">
+                                {comp.name}
+                              </div>
+                            ))}
+                        </div>
+                        <div className="diff-col">
+                          <div className="diff-head">Build 2</div>
+                          {Object.entries(getSavedBuild(1))
+                            .filter(([, v]) => v)
+                            .map(([cat, comp], i) => (
+                              <div key={`b2-${i}`} className="diff-item">
+                                {comp.name}
+                              </div>
+                            ))}
+                        </div>
+                      </div>
                     </div>
-                    <div className="diff-col">
-                      <div className="diff-head">Build 2</div>
-                      {Object.entries(getSavedBuild(1))
-                        .filter(([, v]) => v)
-                        .map(([cat, comp], i) => (
-                          <div key={i} className="diff-item">
-                            {comp.name}
-                          </div>
-                        ))}
-                    </div>
-                  </div>
-                </div>
+                  )}
+                </>
               )}
               {saveMessage && <div className="save-toast">{saveMessage}</div>}
             </div>
@@ -653,5 +793,6 @@ export default function Compatibility() {
         </div>
       )}
     </div>
+    </>
   );
 }

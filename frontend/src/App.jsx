@@ -7,11 +7,13 @@ import {
 } from "react-router-dom";
 import { BuildProvider } from "./contexts/BuildContext";
 import Navbar from "./components/Navbar/Navbar";
+import Footer from "./components/Footer/Footer";
 import Home from "./components/Home/Home";
 import Build from "./components/Build/Build";
 import Compatibility from "./components/Compatibility/Compatibility";
 import Learn from "./components/Learn/Learn";
 import Brands from "./components/Brands/Brands";
+import PCBuilder3D from "./components/3D/PCBuilder3D";
 
 const ScrollToTop = () => {
   const { pathname } = useLocation();
@@ -28,7 +30,7 @@ function App() {
     <BuildProvider>
       <Router>
         <ScrollToTop />
-        <div className="min-h-screen bg-buildlab-dark">
+        <div className="min-h-screen bg-buildlab-dark flex flex-col">
           <Navbar />
           <Routes>
             {/* Main Landing Page */}
@@ -46,7 +48,11 @@ function App() {
             {/* Brands Page */}
             <Route path="/brands" element={<Brands />} />
 
+            {/* 3D Builder Page */}
+            <Route path="/3d-builder" element={<PCBuilder3D />} />
+
           </Routes>
+          <Footer />
         </div>
       </Router>
     </BuildProvider>

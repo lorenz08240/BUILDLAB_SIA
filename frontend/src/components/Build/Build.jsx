@@ -8,43 +8,36 @@ export const buildSteps = [
   {
     key: "case",
     label: "PC Case",
-    icon: "🧱",
     description: "Houses all components",
   },
   {
     key: "motherboard",
     label: "Motherboard",
-    icon: "💻",
     description: "Connects all components",
   },
   {
     key: "cpu",
     label: "CPU (Processor)",
-    icon: "⚙️",
     description: "The brain of your PC",
   },
   {
     key: "ram",
     label: "RAM (Memory)",
-    icon: "💾",
     description: "Temporary data storage",
   },
   {
     key: "storage",
     label: "Storage",
-    icon: "🗄️",
     description: "Permanent data storage",
   },
   {
     key: "gpu",
     label: "GPU (Graphics Card)",
-    icon: "🎮",
     description: "Handles graphics and gaming",
   },
   {
     key: "psu",
     label: "Power Supply (PSU)",
-    icon: "⚡",
     description: "Powers your entire system",
   },
 ];
@@ -632,25 +625,49 @@ function Build() {
             )}
           </div>
 
-          <div className="sidebar-actions">
-            <Link to="/compatibility" className="btn-outline">
-              Check Compatibility
-            </Link>
-          </div>
+
         </div>
 
         <div className="build-content">
           <div className="step-header">
             <div className="step-info">
-              <div className="step-number">
-                Step {currentStep + 1} of {buildSteps.length}
+              <div className="content-cta-row">
+                <Link
+                  to="/compatibility"
+                  className="sidebar-cta-btn sidebar-cta-compat"
+                >
+                  <span className="sidebar-cta-icon">🛡️</span>
+                  <div className="sidebar-cta-text">
+                    <span className="sidebar-cta-label">Check Compatibility</span>
+                    <span className="sidebar-cta-sub">Verify your build parts</span>
+                  </div>
+                </Link>
+
+                {selectedComponents.length === buildSteps.length ? (
+                  <Link
+                    to="/3d-builder"
+                    className="sidebar-cta-btn sidebar-cta-3d"
+                  >
+                    <span className="sidebar-cta-icon">🧊</span>
+                    <div className="sidebar-cta-text">
+                      <span className="sidebar-cta-label">Launch 3D Builder</span>
+                      <span className="sidebar-cta-sub">Visualize your full PC</span>
+                    </div>
+                  </Link>
+                ) : (
+                  <div className="sidebar-cta-btn sidebar-cta-3d sidebar-cta-locked">
+                    <span className="sidebar-cta-icon">🔒</span>
+                    <div className="sidebar-cta-text">
+                      <span className="sidebar-cta-label">Launch 3D Builder</span>
+                      <span className="sidebar-cta-sub">
+                        {buildSteps.length - selectedComponents.length} more part{buildSteps.length - selectedComponents.length !== 1 ? "s" : ""} needed
+                      </span>
+                    </div>
+                  </div>
+                )}
               </div>
-              <h2>{currentStepData.label}</h2>
-              <span className="step-sub-label">
-                {currentStepData.description.toUpperCase()}
-              </span>
             </div>
-            {/* Reset Button moved to top right corner */}
+            {/* Reset Button */}
             <button onClick={handleReset} className="reset-build-btn">
               Reset Build
             </button>

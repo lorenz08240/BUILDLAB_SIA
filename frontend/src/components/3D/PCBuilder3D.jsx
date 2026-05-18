@@ -5,6 +5,24 @@ import { OrthographicCamera, Grid, useTexture, DragControls } from '@react-three
 import { buildSteps, componentsData } from '../Build/Build';
 import './PCBuilder3D.css';
 
+const COMPOSITE_SCENARIOS = [
+  {
+    caseId: 'case1', // Montech AIR-903-base
+    moboId: 'msi-b450-tomahawk',
+    texture: '/textures/case1-B450-TomHawk.png'
+  },
+  {
+    caseId: 'case4', // Lancool 215
+    moboId: 'asus-prime-b660m',
+    texture: '/textures/case4-Asus-Prime.png'
+  },
+  {
+    caseId: 'case4', // Lancool 215 + MSI B450 Tomahawk
+    moboId: 'msi-b450-tomahawk',
+    texture: '/textures/case1-B450-TomHawk.png'
+  }
+];
+
 // This represents the 3D model of a part that was dropped onto the canvas
 function PartModel({ part, position, index, placedParts }) {
   const materialRef = useRef();
@@ -13,19 +31,30 @@ function PartModel({ part, position, index, placedParts }) {
   let isVisible = true;
 
   if (part.category === 'case') {
-    // Fake Scenario: If they dropped the MSI motherboard, swap the case texture!
-    const hasMsiMobo = placedParts.some(p => p.id === 'msi-b450-tomahawk');
-    if (part.id === 'case4' && hasMsiMobo) {
-      texturePath = '/textures/case1-B450-TomHawk.png';
-    } else {
+    const availableCases = ['case1', 'case4'];
+    const placedMobo = placedParts.find(p => p.category === 'motherboard');
+    
+    if (placedMobo) {
+      const scenario = COMPOSITE_SCENARIOS.find(s => s.caseId === part.id && s.moboId === placedMobo.id);
+      if (scenario) {
+        texturePath = scenario.texture;
+      } else if (availableCases.includes(part.id)) {
+        texturePath = `/textures/${part.id}.png`;
+      }
+    } else if (availableCases.includes(part.id)) {
       texturePath = `/textures/${part.id}.png`;
     }
   } else if (part.category === 'motherboard') {
-    // If it's the MSI motherboard and case4 is present, hide this block 
-    // because it's now merged into the case texture!
-    const hasCase4 = placedParts.some(p => p.id === 'case4');
-    if (part.id === 'msi-b450-tomahawk' && hasCase4) {
-      isVisible = false;
+    // Show standalone motherboard texture if no scenario is active
+    if (part.id === 'msi-b450-tomahawk') texturePath = '/textures/motherboard2.jpg';
+    
+    // Hide motherboard if it belongs to a completed composite scenario
+    const placedCase = placedParts.find(p => p.category === 'case');
+    if (placedCase) {
+      const scenario = COMPOSITE_SCENARIOS.find(s => s.caseId === placedCase.id && s.moboId === part.id);
+      if (scenario) {
+        isVisible = false;
+      }
     }
   }
 
