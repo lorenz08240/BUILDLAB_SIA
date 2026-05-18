@@ -171,21 +171,22 @@
   border-radius: 50%;
   display: grid;
   place-items: center;
-  background: var(--dark);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: transparent;
+  border: none;
   color: var(--muted);
+  font-size: 16px;
   font-size: 14px;
   flex-shrink: 0;
 }
 
 .step-item.active .step-icon {
-  background: var(--yellow);
-  color: var(--dark);
+  background: transparent;
+  color: var(--yellow);
 }
 
 .step-item.completed .step-icon {
-  background: var(--green);
-  color: white;
+  background: transparent;
+  color: var(--green);
 }
 
 .step-title {
@@ -442,6 +443,13 @@
   gap: 12px;
 }
 
+.step-number {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+}
 
 
 .step-header h2 {
