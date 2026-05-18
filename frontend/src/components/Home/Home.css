@@ -1,3 +1,54 @@
+.home-page {
+  background: #0b0f1a;
+  min-height: 100vh;
+  color: white;
+  position: relative;
+  overflow-x: hidden;
+}
+
+/* ── Background grid ── */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: linear-gradient(rgba(0, 229, 160, 0.025) 1px,
+      transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 160, 0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ── Ambient glows ── */
+.bg-glow {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.18;
+}
+
+.bg-glow-1 {
+  width: 600px;
+  height: 600px;
+  background: #00e5a0;
+  top: -200px;
+  right: -100px;
+}
+
+.bg-glow-2 {
+  width: 500px;
+  height: 500px;
+  background: #0050ff;
+  bottom: -150px;
+  left: -150px;
+}
+
+.home-page > *:not(.bg-grid):not(.bg-glow) {
+  position: relative;
+  z-index: 1;
+}
+
 /* General styles for the hero section */
 .hero {
   background-color: #0d1117;
@@ -23,7 +74,7 @@
   z-index: 1;
 }
 
-.hero>* {
+.hero > * {
   position: relative;
   z-index: 2;
 }

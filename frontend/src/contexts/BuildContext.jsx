@@ -3,7 +3,6 @@ import React, { createContext, useContext, useEffect, useState } from "react";
 // Build Context for managing selected components
 const BuildContext = createContext();
 
-const STORAGE_KEY = "buildLabSavedBuilds";
 
 // Build Provider component
 export const BuildProvider = ({ children }) => {
@@ -17,15 +16,9 @@ export const BuildProvider = ({ children }) => {
     case: null,
   });
 
+  const [allComponents, setAllComponents] = useState({});
   const [compatibilityResults, setCompatibilityResults] = useState([]);
-  const [savedBuilds, setSavedBuilds] = useState(() => {
-    try {
-      const stored = JSON.parse(localStorage.getItem(STORAGE_KEY));
-      return stored || [null, null, null];
-    } catch {
-      return [null, null, null];
-    }
-  });
+  const [savedBuilds, setSavedBuilds] = useState([null, null, null]);
   const [selectedSaveSlot, setSelectedSaveSlot] = useState(0);
 
   // Function to add a component to the build
@@ -58,13 +51,20 @@ export const BuildProvider = ({ children }) => {
     setCompatibilityResults([]);
   };
 
+
+
+  // Fetch all components and saved builds from backend on load
   useEffect(() => {
-    try {
-      localStorage.setItem(STORAGE_KEY, JSON.stringify(savedBuilds));
-    } catch {
-      // Ignore storage errors.
-    }
-  }, [savedBuilds]);
+    fetch("http://localhost:5000/api/parts")
+      .then(res => res.json())
+      .then(data => setAllComponents(data))
+      .catch(err => console.error("Error fetching components:", err));
+
+    fetch("http://localhost:5000/api/builds")
+      .then(res => res.json())
+      .then(data => setSavedBuilds(data))
+      .catch(err => console.error("Error fetching saved builds:", err));
+  }, []);
 
   const saveBuildSnapshot = (slotIndex = selectedSaveSlot) => {
     setSavedBuilds((prev) => {
@@ -72,6 +72,15 @@ export const BuildProvider = ({ children }) => {
       newBuilds[slotIndex] = currentBuild;
       return newBuilds;
     });
+
+    // Save to database
+    fetch(`http://localhost:5000/api/builds/${slotIndex}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(currentBuild),
+    }).catch(err => console.error("Error saving build to database:", err));
   };
 
   const getSavedBuild = (slotIndex = selectedSaveSlot) => {
@@ -95,6 +104,7 @@ export const BuildProvider = ({ children }) => {
         compatibilityResults,
         savedBuilds,
         selectedSaveSlot,
+        allComponents,
         setSelectedSaveSlot,
         addComponent,
         removeComponent,

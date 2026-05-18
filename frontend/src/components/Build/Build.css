@@ -12,13 +12,56 @@
 
 /* -- BUILD SECTION -- */
 .build-page {
-  background: var(--bg-page);
+  background: #0b0f1a;
   min-height: 100vh;
   color: var(--text-primary);
   font-family: var(--font-body);
   padding-bottom: 80px;
   position: relative;
   overflow-x: hidden;
+}
+
+/* ── Background grid ── */
+.bg-grid {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 0;
+  background-image: linear-gradient(rgba(0, 229, 160, 0.025) 1px,
+      transparent 1px),
+    linear-gradient(90deg, rgba(0, 229, 160, 0.025) 1px, transparent 1px);
+  background-size: 40px 40px;
+}
+
+/* ── Ambient glows ── */
+.bg-glow {
+  position: fixed;
+  pointer-events: none;
+  z-index: 0;
+  border-radius: 50%;
+  filter: blur(120px);
+  opacity: 0.18;
+}
+
+.bg-glow-1 {
+  width: 600px;
+  height: 600px;
+  background: #00e5a0;
+  top: -200px;
+  right: -100px;
+}
+
+.bg-glow-2 {
+  width: 500px;
+  height: 500px;
+  background: #0050ff;
+  bottom: -150px;
+  left: -150px;
+}
+
+.build-page > *:not(.bg-grid):not(.bg-glow) {
+  position: relative;
+  z-index: 1;
 }
 
 .build-hero {
@@ -659,17 +702,17 @@
 .hero-landing {
   width: 100%;
   max-width: 100%;
-  margin-top: 90px;
-  margin-bottom: 90px;
-  min-height: 350px;
+  margin: 0;
+  height: 100vh;
   display: flex;
   align-items: center;
-  padding: 40px 60px;
+  padding: 0 5%;
   background: linear-gradient(rgba(13, 17, 23, 0.8), rgba(13, 17, 23, 0.8)),
     url("https://i.pinimg.com/736x/4c/85/2b/4c852bd9e2ec3f2add423c402206aa62.jpg");
   background-size: cover;
   background-position: center;
-  border-radius: 32px;
+  background-repeat: no-repeat;
+  border-radius: 0;
   overflow: hidden;
   position: relative;
 }

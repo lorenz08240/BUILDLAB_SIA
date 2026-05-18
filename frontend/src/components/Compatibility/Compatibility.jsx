@@ -2,7 +2,7 @@ import React, { useMemo, useState } from "react";
 import { createPortal } from "react-dom";
 import { Link } from "react-router-dom";
 import { useBuild } from "../../contexts/BuildContext";
-import { checkCompatibility } from "../../utilities/rules";
+import { checkCompatibility, getCompatibilitySummary } from "../../utilities/rules";
 import "./Compatibility.css";
 
 /* Siguraduhin na ang Link ay may display properties */
@@ -35,6 +35,7 @@ export default function Compatibility() {
     getSavedBuild: originalGetSavedBuild,
     saveBuildSnapshot,
     resetBuild,
+    allComponents,
   } = useBuild();
 
   const getSavedBuild = (slot) => {
@@ -52,7 +53,7 @@ export default function Compatibility() {
   };
 
   const selectedComponents = getSelectedComponents().sort((a, b) => {
-    const order = ["cpu", "motherboard", "ram", "storage", "gpu", "psu", "case"];
+    const order = ["case", "motherboard", "cpu", "ram", "storage", "gpu", "psu"];
     return order.indexOf(a.category.toLowerCase()) - order.indexOf(b.category.toLowerCase());
   });
   const [compareMode, setCompareMode] = useState(false);
@@ -190,20 +191,7 @@ export default function Compatibility() {
 
   /* ── Compatibility ── */
   const checkAllCompatibility = () => {
-    const issues = [];
-    if (currentBuild?.cpu && currentBuild?.motherboard) {
-      const res = checkCompatibility(
-        { cpu: currentBuild.cpu },
-        { ...currentBuild.motherboard, category: "motherboard" }
-      );
-      if (!res.compatible)
-        issues.push({
-          components: ["CPU", "Motherboard"],
-          issue: res.reason,
-          tip: res.tip,
-        });
-    }
-    return issues;
+    return getCompatibilitySummary(currentBuild, allComponents);
   };
 
   /* ── Check compatibility for any build object ── */
@@ -371,7 +359,7 @@ export default function Compatibility() {
           <div className="empty-card">
             <div className="empty-img-wrap">
               <img
-                src="/public/component_picker_image_bg.png"
+                src="component_picker_image_bg.png"
                 alt="PC Build"
                 className="empty-img"
               />

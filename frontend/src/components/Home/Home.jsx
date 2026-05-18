@@ -17,7 +17,10 @@ function Hero() {
   };
 
   return (
-    <>
+    <div className="home-page">
+      <div className="bg-grid"></div>
+      <div className="bg-glow bg-glow-1"></div>
+      <div className="bg-glow bg-glow-2"></div>
       {isBannerVisible && (
         <div className={`welcome-banner ${isFadingOut ? "fade-out" : ""}`}>
           <div className="welcome-banner-content">
@@ -206,7 +209,7 @@ function Hero() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }
 

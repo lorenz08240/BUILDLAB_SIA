@@ -2,7 +2,8 @@ import React, { useState, Suspense, useRef, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Canvas, useFrame } from '@react-three/fiber';
 import { OrthographicCamera, Grid, useTexture, DragControls } from '@react-three/drei';
-import { buildSteps, componentsData } from '../Build/Build';
+import { buildSteps } from '../Build/Build';
+import { useBuild } from '../../contexts/BuildContext';
 import './PCBuilder3D.css';
 
 const COMPOSITE_SCENARIOS = [
@@ -113,6 +114,7 @@ function PartModel({ part, position, index, placedParts }) {
 
 function PCBuilder3D() {
   const navigate = useNavigate();
+  const { allComponents } = useBuild();
   
   // History state for Undo/Redo
   const [history, setHistory] = useState([[]]);
@@ -227,7 +229,7 @@ function PCBuilder3D() {
           {buildSteps.map((step, index) => {
             const isLocked = isStepLocked(index);
             const isExpanded = activeStep === index;
-            const stepComponents = componentsData[step.key] || [];
+            const stepComponents = allComponents[step.key] || [];
             const isCompleted = placedParts.some(p => p.category === step.key);
 
             return (
